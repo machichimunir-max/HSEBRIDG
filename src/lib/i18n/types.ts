@@ -202,6 +202,16 @@ export interface Translations {
     passwordMinLength: string;
     passwordMismatch: string;
     requiredField: string;
+    // Validation messages
+    titleRequired: string;
+    slugRequired: string;
+    categoryRequired: string;
+    levelRequired: string;
+    requirementsRequired: string;
+    learningOutcomesRequired: string;
+    addAtLeastOneModule: string;
+    failedToCreate: string;
+    errorOccurred: string;
   };
   student: {
     dashboardTitle: string;

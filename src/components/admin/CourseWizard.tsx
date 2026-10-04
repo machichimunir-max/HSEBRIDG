@@ -2,20 +2,21 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useI18n } from "@/lib/i18n/I18nContext";
 
 interface Step {
   id: number;
-  title: string;
-  description: string;
+  titleKey: string;
+  descriptionKey: string;
 }
 
-const steps: Step[] = [
-  { id: 1, title: "Basic", description: "Course basics" },
-  { id: 2, title: "Info", description: "Course information" },
-  { id: 3, title: "Modules & Lessons", description: "Course content" },
-  { id: 4, title: "Media", description: "Thumbnail & images" },
-  { id: 5, title: "SEO", description: "Search optimization" },
-  { id: 6, title: "Publish", description: "Review & publish" },
+const getSteps = (): Step[] => [
+  { id: 1, titleKey: "courseWizardBasic", descriptionKey: "courseWizardBasic" },
+  { id: 2, titleKey: "courseWizardInfo", descriptionKey: "courseWizardInfo" },
+  { id: 3, titleKey: "courseWizardContent", descriptionKey: "courseWizardContent" },
+  { id: 4, titleKey: "courseWizardMedia", descriptionKey: "courseWizardMedia" },
+  { id: 5, titleKey: "courseWizardSeo", descriptionKey: "courseWizardSeo" },
+  { id: 6, titleKey: "courseWizardPublish", descriptionKey: "courseWizardPublish" },
 ];
 
 interface Module {
@@ -60,6 +61,8 @@ interface CourseFormData {
 
 export default function CourseWizard() {
   const router = useRouter();
+  const { t } = useI18n();
+  const steps = getSteps();
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -227,17 +230,17 @@ export default function CourseWizard() {
   const validateStep = (step: number): string | null => {
     switch (step) {
       case 1:
-        if (!formData.title) return "Title is required";
-        if (!formData.slug) return "Slug is required";
-        if (!formData.category) return "Category is required";
-        if (!formData.level) return "Level is required";
+        if (!formData.title) return t.auth.titleRequired;
+        if (!formData.slug) return t.auth.slugRequired;
+        if (!formData.category) return t.auth.categoryRequired;
+        if (!formData.level) return t.auth.levelRequired;
         break;
       case 2:
-        if (!formData.requirements) return "Requirements are needed";
-        if (!formData.learningOutcomes) return "Learning outcomes are needed";
+        if (!formData.requirements) return t.auth.requirementsRequired;
+        if (!formData.learningOutcomes) return t.auth.learningOutcomesRequired;
         break;
       case 3:
-        if (formData.modules.length === 0) return "Add at least one module";
+        if (formData.modules.length === 0) return t.auth.addAtLeastOneModule;
         break;
     }
     return null;
@@ -277,13 +280,13 @@ export default function CourseWizard() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to create course");
+        throw new Error(t.auth.failedToCreate);
       }
 
       const result = await response.json();
       router.push(`/admin/courses/${result.id}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      setError(err instanceof Error ? err.message : t.auth.errorOccurred);
     } finally {
       setLoading(false);
     }
@@ -293,9 +296,9 @@ export default function CourseWizard() {
     <div className="mx-auto max-w-5xl">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white">Create New Course</h1>
+        <h1 className="text-3xl font-bold text-white">{t.admin.createCourse}</h1>
         <p className="mt-1 text-sm text-slate-400">
-          Follow the steps to create your course
+          {t.admin.createCourse}
         </p>
       </div>
 
@@ -326,9 +329,9 @@ export default function CourseWizard() {
                       step.id === currentStep ? "text-white" : "text-slate-400"
                     }`}
                   >
-                    {step.title}
+                    {t.admin[step.titleKey as keyof typeof t.admin] as string}
                   </p>
-                  <p className="text-xs text-slate-500">{step.description}</p>
+                  <p className="text-xs text-slate-500">{t.admin[step.descriptionKey as keyof typeof t.admin] as string}</p>
                 </div>
               </div>
               {index < steps.length - 1 && (

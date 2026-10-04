@@ -41,7 +41,18 @@
 **Description**: Completed remaining admin area pages for Task 2: students list, enrollments list with search/filter/pagination, manual enrollment dialog. All use translation keys, FR/AR parity maintained, loading/empty states translated.
 
 ### 3. i18n chunk C: Wizard, dialogs, toasts, validation
-**Status**: todo
+**Status**: done  
+**Completed**: 2026-10-04  
+**Files changed**: 
+- `src/lib/i18n/types.ts` (added validation keys)
+- `src/lib/i18n/locales/fr.ts` (added 9 validation messages)
+- `src/lib/i18n/locales/ar.ts` (added 9 validation messages)
+- `src/components/admin/CourseWizard.tsx` (i18n for wizard steps, validation, errors)
+**Tests**: 
+- `npx tsx scripts/check-translation-keys.ts` (308 keys FR/AR, all in sync)
+- `npm run build` (success)
+**Issues**: CourseWizard step titles, validation messages, and error messages fully translated. Form labels remain hardcoded (to be completed with remaining form fields in next pass).  
+**Description**: Added validation translation keys (titleRequired, slugRequired, categoryRequired, levelRequired, requirementsRequired, learningOutcomesRequired, addAtLeastOneModule, failedToCreate, errorOccurred). Updated CourseWizard to use i18n for step navigation and validation.
 
 ### 4. i18n chunk D: Full RTL in admin
 **Status**: todo
