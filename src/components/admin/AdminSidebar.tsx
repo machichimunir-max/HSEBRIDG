@@ -85,7 +85,7 @@ export function AdminSidebar() {
       <aside
         className={`fixed top-0 bottom-0 z-50 w-64 border-slate-800 bg-slate-900 transition-transform duration-300 ${
           isRtl ? "border-l right-0 translate-x-full lg:translate-x-0" : "border-r left-0 -translate-x-full lg:translate-x-0"
-        } ${!isCollapsed ? (isRtl ? "!translate-x-0" : "!translate-x-0") : ""}`}
+        } ${!isCollapsed ? "!translate-x-0" : ""}`}
         dir={isRtl ? "rtl" : "ltr"}
       >
         <div className="flex h-full flex-col">

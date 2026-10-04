@@ -171,7 +171,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
               placeholder={t.admin.searchPlaceholder}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className={`w-full rounded-lg border border-slate-700 bg-slate-950 py-2 text-sm text-white placeholder-slate-400 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 ${isRtl ? 'pr-10 pl-4' : 'pl-10 pr-4'}`}
+              className="w-full rounded-lg border border-slate-700 bg-slate-950 py-2 text-sm text-white placeholder-slate-400 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 ps-10 pe-4"
             />
           </div>
 
@@ -227,7 +227,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                   <th className="px-6 py-4 text-sm font-medium text-slate-300">{t.student.modules}</th>
                   <th className="px-6 py-4 text-sm font-medium text-slate-300">{t.admin.sidebarStudents}</th>
                   <th className="px-6 py-4 text-sm font-medium text-slate-300">Status</th>
-                  <th className={`px-6 py-4 text-sm font-medium text-slate-300 ${isRtl ? 'text-left' : 'text-right'}`}>{t.admin.actionsColumn}</th>
+                  <th className={`px-6 py-4 text-sm font-medium text-slate-300 ${isRtl ? 'text-start' : 'text-end'}`}>{t.admin.actionsColumn}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800">

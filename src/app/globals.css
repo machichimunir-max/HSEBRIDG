@@ -106,3 +106,18 @@ select {
     box-shadow: 0 4px 14px 0 rgba(7, 48, 34, 0.15);
   }
 }
+
+/* RTL specific styles */
+[dir="rtl"] .icon-flip {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .margin-start-auto {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+[dir="ltr"] .margin-start-auto {
+  margin-left: auto;
+  margin-right: 0;
+}

@@ -79,11 +79,11 @@ export default async function UsersPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-800">
-                  <th className="text-left text-xs font-bold text-slate-400 uppercase pb-3">Nom</th>
-                  <th className="text-left text-xs font-bold text-slate-400 uppercase pb-3">Email</th>
-                  <th className="text-left text-xs font-bold text-slate-400 uppercase pb-3">Rôle</th>
-                  <th className="text-left text-xs font-bold text-slate-400 uppercase pb-3">Inscription</th>
-                  <th className="text-right text-xs font-bold text-slate-400 uppercase pb-3">Actions</th>
+                  <th className="text-start text-xs font-bold text-slate-400 uppercase pb-3">Nom</th>
+                  <th className="text-start text-xs font-bold text-slate-400 uppercase pb-3">Email</th>
+                  <th className="text-start text-xs font-bold text-slate-400 uppercase pb-3">Rôle</th>
+                  <th className="text-start text-xs font-bold text-slate-400 uppercase pb-3">Inscription</th>
+                  <th className="text-end text-xs font-bold text-slate-400 uppercase pb-3">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -107,7 +107,7 @@ export default async function UsersPage() {
                     <td className="py-3 text-xs text-slate-400">
                       {new Date(user.createdAt).toLocaleDateString("fr-FR")}
                     </td>
-                    <td className="py-3 text-right">
+                    <td className="py-3 text-end">
                       {user.role === "STUDENT" && (
                         <Link
                           href={`/admin/students/${user.id}`}
