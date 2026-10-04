@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import { StudentsTableClient } from "@/components/admin/StudentsTableClient";
+import { ClientStudentsPageHeader } from "./ClientStudentsPageHeader";
 
 export default async function AdminStudentsPage() {
   const students = await prisma.user.findMany({
@@ -31,13 +32,7 @@ export default async function AdminStudentsPage() {
 
   return (
     <div className="mx-auto max-w-7xl">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-white">Students</h1>
-        <p className="mt-1 text-sm text-slate-400">
-          Manage student accounts and enrollments
-        </p>
-      </div>
-
+      <ClientStudentsPageHeader />
       <StudentsTableClient students={serializedStudents} />
     </div>
   );

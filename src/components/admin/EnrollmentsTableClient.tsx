@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { formatDate } from "@/lib/date-utils";
 import { ManualEnrollDialog } from "./ManualEnrollDialog";
+import { useI18n } from "@/lib/i18n/I18nContext";
 
 type Enrollment = {
   id: string;
@@ -32,6 +33,7 @@ interface EnrollmentsTableClientProps {
 }
 
 export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTableClientProps) {
+  const { t } = useI18n();
   const [search, setSearch] = useState("");
   const [courseFilter, setCourseFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -86,7 +88,7 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
             </svg>
             <input
               type="search"
-              placeholder="Search student or course..."
+              placeholder={t.admin.searchPlaceholder}
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
@@ -104,7 +106,7 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
             }}
             className="rounded-lg border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
           >
-            <option value="">All courses</option>
+            <option value="">{t.admin.allCourses}</option>
             {courses.map((course) => (
               <option key={course.id} value={course.id}>
                 {course.title}
@@ -117,7 +119,7 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
           onClick={() => setShowEnrollDialog(true)}
           className="rounded-lg bg-cyan-500 px-4 py-2 text-sm font-medium text-slate-950 transition-colors hover:bg-cyan-600"
         >
-          + Enroll Student
+          + {t.admin.enrollStudent}
         </button>
       </div>
 
@@ -127,12 +129,12 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
           <div className="mx-auto max-w-sm">
             <div className="mb-4 text-4xl">📝</div>
             <h3 className="text-lg font-semibold text-white">
-              {search || courseFilter ? "No enrollments found" : "No enrollments yet"}
+              {search || courseFilter ? t.admin.noEnrollments : t.admin.noEnrollments}
             </h3>
             <p className="mt-2 text-sm text-slate-400">
               {search || courseFilter
-                ? "Try adjusting your filters"
-                : "Enrollments will appear when students enroll in courses"}
+                ? t.admin.searchPlaceholder
+                : t.admin.noEnrollments}
             </p>
           </div>
         </div>
@@ -143,20 +145,20 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
               <table className="w-full">
                 <thead className="border-b border-slate-800 bg-slate-950/50">
                   <tr>
-                    <th className="px-6 py-4 text-left text-sm font-medium text-slate-300">
-                      Student
+                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
+                      {t.admin.enrollmentStudentEmail}
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-medium text-slate-300">
-                      Course
+                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
+                      {t.admin.enrollmentCourse}
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-medium text-slate-300">
-                      Enrolled Date
+                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
+                      {t.admin.enrollmentsTitle}
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-medium text-slate-300">
+                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
                       Status
                     </th>
-                    <th className="px-6 py-4 text-right text-sm font-medium text-slate-300">
-                      Actions
+                    <th className="px-6 py-4 text-end text-sm font-medium text-slate-300">
+                      {t.admin.actionsColumn}
                     </th>
                   </tr>
                 </thead>
@@ -204,15 +206,15 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
                       </td>
                       <td className="px-6 py-4">
                         <span className="inline-flex rounded-full bg-emerald-500/15 px-2 py-1 text-xs font-medium text-emerald-300">
-                          Active
+                          {t.admin.enrollmentActive}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-right">
+                      <td className="px-6 py-4 text-end">
                         <Link
                           href={`/admin/students/${enrollment.user.id}`}
                           className="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm text-slate-300 transition-colors hover:bg-slate-800"
                         >
-                          View student
+                          {t.admin.viewStudent}
                           <svg
                             className="h-4 w-4"
                             fill="none"
@@ -239,8 +241,10 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
           {totalPages > 1 && (
             <div className="mt-6 flex items-center justify-between">
               <p className="text-sm text-slate-400">
-                Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredEnrollments.length)} of{" "}
-                {filteredEnrollments.length} enrollments
+                {t.admin.showingResults
+                  .replace("{start}", String(startIndex + 1))
+                  .replace("{end}", String(Math.min(startIndex + itemsPerPage, filteredEnrollments.length)))
+                  .replace("{total}", String(filteredEnrollments.length))}
               </p>
 
               <div className="flex gap-2">
@@ -249,7 +253,7 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
                   disabled={currentPage === 1}
                   className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 transition-colors hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent"
                 >
-                  Previous
+                  {t.admin.previousPage}
                 </button>
                 <div className="flex gap-1">
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -271,7 +275,7 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
                   disabled={currentPage === totalPages}
                   className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 transition-colors hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent"
                 >
-                  Next
+                  {t.admin.nextPage}
                 </button>
               </div>
             </div>

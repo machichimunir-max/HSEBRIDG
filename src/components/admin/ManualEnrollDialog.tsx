@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useI18n } from "@/lib/i18n/I18nContext";
 
 interface ManualEnrollDialogProps {
   courses: { id: string; title: string }[];
@@ -9,6 +10,7 @@ interface ManualEnrollDialogProps {
 }
 
 export function ManualEnrollDialog({ courses, onClose, onSuccess }: ManualEnrollDialogProps) {
+  const { t } = useI18n();
   const [courseId, setCourseId] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,7 +19,7 @@ export function ManualEnrollDialog({ courses, onClose, onSuccess }: ManualEnroll
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!courseId || !email) {
-      setError("All fields are required");
+      setError(t.common.error);
       return;
     }
 
@@ -34,14 +36,14 @@ export function ManualEnrollDialog({ courses, onClose, onSuccess }: ManualEnroll
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Failed to enroll student");
+        setError(data.error || t.common.error);
         return;
       }
 
       onSuccess();
       onClose();
     } catch (err) {
-      setError("Failed to enroll student");
+      setError(t.common.error);
     } finally {
       setLoading(false);
     }
@@ -50,13 +52,13 @@ export function ManualEnrollDialog({ courses, onClose, onSuccess }: ManualEnroll
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
       <div className="w-full max-w-md rounded-2xl border border-slate-700 bg-slate-900 p-6">
-        <h2 className="text-2xl font-bold text-white">Manual Enrollment</h2>
-        <p className="mt-2 text-sm text-slate-400">Enroll a student in a course</p>
+        <h2 className="text-2xl font-bold text-white">{t.admin.manualEnrollment}</h2>
+        <p className="mt-2 text-sm text-slate-400">{t.admin.manualEnrollment}</p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-2">
-              Student Email
+              {t.admin.enrollmentStudentEmail}
             </label>
             <input
               type="email"
@@ -70,7 +72,7 @@ export function ManualEnrollDialog({ courses, onClose, onSuccess }: ManualEnroll
 
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-2">
-              Course
+              {t.admin.enrollmentCourse}
             </label>
             <select
               value={courseId}
@@ -78,7 +80,7 @@ export function ManualEnrollDialog({ courses, onClose, onSuccess }: ManualEnroll
               className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-white focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
               required
             >
-              <option value="">Select a course</option>
+              <option value="">{t.admin.selectCourse}</option>
               {courses.map((course) => (
                 <option key={course.id} value={course.id}>
                   {course.title}
@@ -99,14 +101,14 @@ export function ManualEnrollDialog({ courses, onClose, onSuccess }: ManualEnroll
               onClick={onClose}
               className="flex-1 rounded-lg border border-slate-700 px-4 py-2.5 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-800"
             >
-              Cancel
+              {t.common.cancel}
             </button>
             <button
               type="submit"
               disabled={loading}
               className="flex-1 rounded-lg bg-cyan-500 px-4 py-2.5 text-sm font-medium text-slate-950 transition-colors hover:bg-cyan-600 disabled:opacity-50"
             >
-              {loading ? "Enrolling..." : "Enroll Student"}
+              {loading ? t.common.loading : t.admin.enrollStudent}
             </button>
           </div>
         </form>

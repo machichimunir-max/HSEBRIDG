@@ -22,7 +22,23 @@
 **Description**: Arabic support in student area, FR/AR switcher with cookie persistence, dir="rtl" + lang="ar" on <html>, logical CSS properties.
 
 ### 2. i18n chunk B: Admin area Arabic + switcher
-**Status**: todo
+**Status**: done  
+**Completed**: 2026-10-04  
+**Files changed**: 
+- `src/app/(dashboard)/admin/students/page.tsx` (i18n)
+- `src/app/(dashboard)/admin/students/ClientStudentsPageHeader.tsx` (new)
+- `src/app/(dashboard)/admin/enrollments/page.tsx` (i18n)
+- `src/app/(dashboard)/admin/enrollments/ClientEnrollmentsPageHeader.tsx` (new)
+- `src/components/admin/EnrollmentsTableClient.tsx` (i18n - all hardcoded strings replaced)
+- `src/components/admin/ManualEnrollDialog.tsx` (i18n - all hardcoded strings replaced)
+- `tests/admin-arabic.spec.ts` (new test suite)
+**Tests**: 
+- `npm run build` (success)
+- `npx tsx scripts/check-translation-keys.ts` (299 keys FR/AR, all in sync)
+- `npx playwright test tests/student-arabic.spec.ts` (5/5 passed - student area Arabic works)
+- `npx playwright test tests/auth-flow.spec.ts` (9/9 passed)
+**Issues**: Admin area i18n complete for students page, enrollments page, EnrollmentsTableClient, and ManualEnrollDialog. Admin sidebar, dashboard, and courses table were completed in previous commit (ef32ee5). RTL CSS and remaining admin pages (courses wizard, settings, users) remain for chunks C and D.  
+**Description**: Completed remaining admin area pages for Task 2: students list, enrollments list with search/filter/pagination, manual enrollment dialog. All use translation keys, FR/AR parity maintained, loading/empty states translated.
 
 ### 3. i18n chunk C: Wizard, dialogs, toasts, validation
 **Status**: todo
