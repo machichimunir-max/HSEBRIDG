@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteCourseAction } from "@/app/(dashboard)/admin/courses/actions";
+import { useI18n } from "@/lib/i18n/I18nContext";
 
 type Course = {
   id: string;
@@ -24,6 +25,7 @@ interface CoursesTableClientProps {
 
 export function CoursesTableClient({ courses }: CoursesTableClientProps) {
   const router = useRouter();
+  const { t, isRtl } = useI18n();
   const [isPending, startTransition] = useTransition();
   const [view, setView] = useState<"table" | "grid">("table");
   const [filter, setFilter] = useState<"all" | "published" | "draft">("all");
@@ -68,10 +70,10 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
           router.refresh();
         });
       } else {
-        alert(result.error || "Failed to delete course");
+        alert(result.error || t.common.error);
       }
     } catch (error) {
-      alert("Failed to delete course");
+      alert(t.common.error);
     } finally {
       setDeleting(false);
     }
@@ -87,7 +89,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
   };
 
   return (
-    <div>
+    <div dir={isRtl ? "rtl" : "ltr"}>
       {/* Filters and controls */}
       <div className="mb-6 space-y-4">
         {/* Tabs and view toggle */}
@@ -102,7 +104,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                   : "border border-slate-700 text-slate-300 hover:bg-slate-800"
               }`}
             >
-              All ({courses.length})
+              {t.admin.allCourses} ({courses.length})
             </button>
             <button
               onClick={() => setFilter("published")}
@@ -112,7 +114,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                   : "border border-slate-700 text-slate-300 hover:bg-slate-800"
               }`}
             >
-              Published ({courses.filter((c) => c.isPublished).length})
+              {t.admin.publishedStatus} ({courses.filter((c) => c.isPublished).length})
             </button>
             <button
               onClick={() => setFilter("draft")}
@@ -122,7 +124,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                   : "border border-slate-700 text-slate-300 hover:bg-slate-800"
               }`}
             >
-              Draft ({courses.filter((c) => !c.isPublished).length})
+              {t.admin.draftStatus} ({courses.filter((c) => !c.isPublished).length})
             </button>
           </div>
 
@@ -157,7 +159,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
         <div className="flex flex-col gap-3 sm:flex-row">
           <div className="relative flex-1">
             <svg
-              className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
+              className={`absolute top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400 ${isRtl ? 'right-3' : 'left-3'}`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -166,10 +168,10 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
             </svg>
             <input
               type="search"
-              placeholder="Search courses by title..."
+              placeholder={t.admin.searchPlaceholder}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg border border-slate-700 bg-slate-950 py-2 pl-10 pr-4 text-sm text-white placeholder-slate-400 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+              className={`w-full rounded-lg border border-slate-700 bg-slate-950 py-2 text-sm text-white placeholder-slate-400 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 ${isRtl ? 'pr-10 pl-4' : 'pl-10 pr-4'}`}
             />
           </div>
 
@@ -180,7 +182,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                 sortBy === "title" ? "text-cyan-300" : "text-slate-300"
               }`}
             >
-              Title
+              {t.admin.courseTitle}
               {sortBy === "title" && (
                 <span>{sortOrder === "asc" ? "↑" : "↓"}</span>
               )}
@@ -206,11 +208,8 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
           <div className="mx-auto max-w-sm">
             <div className="mb-4 text-4xl">📚</div>
             <h3 className="text-lg font-semibold text-white">
-              {search ? "No courses found" : filter === "all" ? "No courses yet" : `No ${filter} courses`}
+              {t.admin.noCourses}
             </h3>
-            <p className="mt-2 text-sm text-slate-400">
-              {search ? "Try a different search term" : "Get started by creating your first course"}
-            </p>
           </div>
         </div>
       )}
@@ -219,16 +218,16 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
       {view === "table" && sortedCourses.length > 0 && (
         <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full text-start">
               <thead className="border-b border-slate-800 bg-slate-950/50">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-slate-300">Course</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-slate-300">Category</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-slate-300">Level</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-slate-300">Modules</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-slate-300">Students</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-slate-300">Status</th>
-                  <th className="px-6 py-4 text-right text-sm font-medium text-slate-300">Actions</th>
+                  <th className="px-6 py-4 text-sm font-medium text-slate-300">{t.admin.coursesTitle}</th>
+                  <th className="px-6 py-4 text-sm font-medium text-slate-300">{t.admin.courseCategory}</th>
+                  <th className="px-6 py-4 text-sm font-medium text-slate-300">{t.admin.courseLevel}</th>
+                  <th className="px-6 py-4 text-sm font-medium text-slate-300">{t.student.modules}</th>
+                  <th className="px-6 py-4 text-sm font-medium text-slate-300">{t.admin.sidebarStudents}</th>
+                  <th className="px-6 py-4 text-sm font-medium text-slate-300">Status</th>
+                  <th className={`px-6 py-4 text-sm font-medium text-slate-300 ${isRtl ? 'text-left' : 'text-right'}`}>{t.admin.actionsColumn}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800">
@@ -258,7 +257,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                           course.isPublished ? "bg-emerald-500/15 text-emerald-300" : "bg-amber-500/15 text-amber-300"
                         }`}
                       >
-                        {course.isPublished ? "Published" : "Draft"}
+                        {course.isPublished ? t.admin.publishedStatus : t.admin.draftStatus}
                       </span>
                     </td>
                     <td className="px-6 py-4">
@@ -267,7 +266,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                           <Link
                             href={`/courses/${course.slug}`}
                             className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
-                            title="View course"
+                            title={t.common.view}
                           >
                             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -278,7 +277,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                         <Link
                           href={`/admin/courses/${course.id}`}
                           className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
-                          title="Edit course"
+                          title={t.common.edit}
                         >
                           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -287,7 +286,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                         <button
                           onClick={() => setDeleteConfirm(course.id)}
                           className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-red-500/10 hover:text-red-400"
-                          title="Delete course"
+                          title={t.common.delete}
                         >
                           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -320,13 +319,13 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                   </div>
                 )}
                 {/* Status badge */}
-                <div className="absolute right-3 top-3">
+                <div className={`absolute ${isRtl ? 'left-3' : 'right-3'} top-3`}>
                   <span
                     className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium backdrop-blur-sm ${
                       course.isPublished ? "bg-emerald-500/90 text-white" : "bg-amber-500/90 text-white"
                     }`}
                   >
-                    {course.isPublished ? "Published" : "Draft"}
+                    {course.isPublished ? t.admin.publishedStatus : t.admin.draftStatus}
                   </span>
                 </div>
               </div>
@@ -342,9 +341,9 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                 </div>
 
                 <div className="mt-4 flex items-center gap-4 text-sm text-slate-300">
-                  <span>{course.modules.length} modules</span>
+                  <span>{course.modules.length} {t.student.modules}</span>
                   <span>•</span>
-                  <span>{course.enrollments.length} students</span>
+                  <span>{course.enrollments.length} {t.admin.sidebarStudents}</span>
                 </div>
 
                 {/* Actions */}
@@ -353,13 +352,13 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                     href={`/admin/courses/${course.id}`}
                     className="flex-1 rounded-lg border border-slate-700 px-3 py-2 text-center text-sm text-slate-200 transition-colors hover:bg-slate-800"
                   >
-                    Edit
+                    {t.common.edit}
                   </Link>
                   {course.isPublished && (
                     <Link
                       href={`/courses/${course.slug}`}
                       className="rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-200 transition-colors hover:bg-slate-800"
-                      title="View"
+                      title={t.common.view}
                     >
                       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -370,7 +369,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                   <button
                     onClick={() => setDeleteConfirm(course.id)}
                     className="rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-400 transition-colors hover:border-red-500/30 hover:bg-red-500/10 hover:text-red-400"
-                    title="Delete"
+                    title={t.common.delete}
                   >
                     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -387,9 +386,9 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
       {deleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm">
           <div className="mx-4 w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl">
-            <h3 className="text-xl font-semibold text-white">Delete course?</h3>
+            <h3 className="text-xl font-semibold text-white">{t.admin.confirmDelete}</h3>
             <p className="mt-2 text-sm text-slate-400">
-              This action cannot be undone. All course data, modules, and student progress will be permanently deleted.
+              {t.admin.confirmDeleteMessage}
             </p>
             <div className="mt-6 flex gap-3">
               <button
@@ -397,14 +396,14 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                 disabled={deleting}
                 className="flex-1 rounded-lg border border-slate-700 px-4 py-2 text-sm text-slate-200 transition-colors hover:bg-slate-800 disabled:opacity-50"
               >
-                Cancel
+                {t.common.cancel}
               </button>
               <button
                 onClick={() => handleDelete(deleteConfirm)}
                 disabled={deleting}
                 className="flex-1 rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-600 disabled:opacity-50"
               >
-                {deleting ? "Deleting..." : "Delete"}
+                {deleting ? t.common.loading : t.common.delete}
               </button>
             </div>
           </div>

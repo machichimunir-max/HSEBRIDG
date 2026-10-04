@@ -1,34 +1,46 @@
+"use client";
+
 import Link from "next/link";
-import { prisma } from "@/lib/db";
+import { useEffect, useState } from "react";
 import { CoursesTableClient } from "@/components/admin/CoursesTableClient";
+import { useI18n } from "@/lib/i18n/I18nContext";
 
-export default async function AdminCoursesPage() {
-  const courses = await prisma.course.findMany({
-    orderBy: [{ createdAt: "desc" }],
-    include: {
-      modules: {
-        select: { id: true },
-      },
-      enrollments: {
-        select: { id: true },
-      },
-    },
-  });
+export default function AdminCoursesPage() {
+  const { t } = useI18n();
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Serialize courses to plain objects (convert Decimal to string/number, Date to ISO string)
-  const serializedCourses = courses.map((course) => ({
-    ...course,
-    price: course.price ? Number(course.price) : null,
-    createdAt: course.createdAt.toISOString(),
-    updatedAt: course.updatedAt.toISOString(),
-  }));
+  useEffect(() => {
+    async function loadCourses() {
+      try {
+        const res = await fetch("/api/courses");
+        if (res.ok) {
+          const data = await res.json();
+          setCourses(data);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadCourses();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="mx-auto max-w-7xl">
+        <p className="text-white">{t.common.loading}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-7xl">
       <div className="mb-6 flex items-center justify-between gap-3">
         <div>
-          <h1 className="text-3xl font-bold text-white">Course management</h1>
-          <p className="mt-1 text-sm text-slate-400">Manage all your courses</p>
+          <h1 className="text-3xl font-bold text-white">{t.admin.coursesTitle}</h1>
+          <p className="mt-1 text-sm text-slate-400">{t.admin.manageCourses}</p>
         </div>
         <Link
           href="/admin/courses/new"
@@ -37,11 +49,11 @@ export default async function AdminCoursesPage() {
           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
-          Créer une formation
+          {t.admin.createCourse}
         </Link>
       </div>
 
-      <CoursesTableClient courses={serializedCourses} />
+      <CoursesTableClient courses={courses} />
     </div>
   );
 }

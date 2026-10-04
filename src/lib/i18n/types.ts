@@ -316,6 +316,42 @@ export interface Translations {
     confirmDeleteMessage: string;
     yes: string;
     no: string;
+
+    // Multi-Pillar Dashboard
+    dashboardMultiPillar: string;
+    dashboardMultiPillarDesc: string;
+    pillarFormation: string;
+    pillarFormationDesc: string;
+    published: string;
+    activeAccounts: string;
+    activeEnrollments: string;
+    vsLastMonth: string;
+    management: string;
+    manageCourses: string;
+    viewStudents: string;
+    latestEnrollments: string;
+    viewAll: string;
+    pillarBoutique: string;
+    pillarBoutiqueDesc: string;
+    catalogProducts: string;
+    availablePhase6: string;
+    quoteRequests: string;
+    pendingQuotes: string;
+    moduleStatus: string;
+    waitingPhase6: string;
+    catalogAndQuotes: string;
+    manageCategories: string;
+    manageProducts: string;
+    pillarRecrutement: string;
+    pillarRecrutementDesc: string;
+    publishedJobs: string;
+    activeJobs: string;
+    applications: string;
+    newApplications: string;
+    waitingPhase7: string;
+    jobsAndCVs: string;
+    manageJobs: string;
+    viewApplications: string;
   };
   catalog: {
     title: string;

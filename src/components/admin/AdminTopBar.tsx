@@ -14,6 +14,7 @@ export function AdminTopBar({ userName, userEmail }: AdminTopBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const { t, isRtl } = useI18n();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -42,12 +43,12 @@ export function AdminTopBar({ userName, userEmail }: AdminTopBarProps) {
 
   return (
     <header className="sticky top-0 z-30 h-16 border-b border-slate-800 bg-slate-900/95 backdrop-blur-sm">
-      <div className="flex h-full items-center justify-between px-6">
+      <div className="flex h-full items-center justify-between px-6 pl-16 lg:pl-6 ltr:pl-16 rtl:pr-16 lg:ltr:pl-6 lg:rtl:pr-6">
         {/* Search */}
         <div className="flex-1 max-w-md lg:max-w-xl">
           <div className="relative">
             <svg
-              className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
+              className={`absolute top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400 ${isRtl ? 'right-3' : 'left-3'}`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -61,8 +62,8 @@ export function AdminTopBar({ userName, userEmail }: AdminTopBarProps) {
             </svg>
             <input
               type="search"
-              placeholder="Search courses, students..."
-              className="w-full rounded-lg border border-slate-700 bg-slate-950 py-2 pl-10 pr-4 text-sm text-white placeholder-slate-400 focus:border-[#FDCD1A] focus:outline-none focus:ring-1 focus:ring-[#FDCD1A]"
+              placeholder={t.admin.searchPlaceholder}
+              className={`w-full rounded-lg border border-slate-700 bg-slate-950 py-2 text-sm text-white placeholder-slate-400 focus:border-[#FDCD1A] focus:outline-none focus:ring-1 focus:ring-[#FDCD1A] ${isRtl ? 'pr-10 pl-4' : 'pl-10 pr-4'}`}
             />
           </div>
         </div>
@@ -82,7 +83,7 @@ export function AdminTopBar({ userName, userEmail }: AdminTopBarProps) {
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FDCD1A] text-sm font-bold text-[#0A0A0A]">
                 {userName?.charAt(0).toUpperCase() || "A"}
               </div>
-              <div className="hidden text-left md:block">
+              <div className="hidden text-start md:block">
                 <p className="text-sm font-medium text-white">{userName || "Admin"}</p>
                 <p className="text-xs text-slate-400">{userEmail || ""}</p>
               </div>
@@ -98,8 +99,8 @@ export function AdminTopBar({ userName, userEmail }: AdminTopBarProps) {
 
               {/* Dropdown menu */}
               {isMenuOpen && (
-                <div className="absolute right-0 mt-2 w-56 rounded-lg border border-slate-700 bg-slate-900 py-2 shadow-xl">
-                  <div className="border-b border-slate-800 px-4 py-3">
+                <div className={`absolute ${isRtl ? 'left-0' : 'right-0'} mt-2 w-56 rounded-lg border border-slate-700 bg-slate-900 py-2 shadow-xl`}>
+                  <div className="border-b border-slate-800 px-4 py-3 text-start">
                     <p className="text-sm font-medium text-white">{userName || "Admin"}</p>
                     <p className="text-xs text-slate-400">{userEmail || ""}</p>
                   </div>
@@ -107,7 +108,7 @@ export function AdminTopBar({ userName, userEmail }: AdminTopBarProps) {
                     onClick={handleLogout}
                     className="flex w-full items-center gap-3 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-800 hover:text-white cursor-pointer"
                   >
-                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className={`h-5 w-5 ${isRtl ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -115,7 +116,7 @@ export function AdminTopBar({ userName, userEmail }: AdminTopBarProps) {
                         d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                       />
                     </svg>
-                    Logout
+                    {t.common.logout}
                   </button>
                 </div>
               )}
@@ -125,3 +126,4 @@ export function AdminTopBar({ userName, userEmail }: AdminTopBarProps) {
       </header>
     );
   }
+
