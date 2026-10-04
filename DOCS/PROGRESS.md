@@ -55,7 +55,12 @@
 **Description**: Added validation translation keys and updated CourseWizard navigation. Foundation for wizard i18n complete; comprehensive form label translation deferred to allow progress on RTL implementation and other features.
 
 ### 4. i18n chunk D: Full RTL in admin
-**Status**: todo
+**Status**: partial (initial RTL logical-property pass started)
+**Started**: 2026-10-05
+**Files changed**: `src/components/admin/AdminTopBar.tsx` (search input now uses `ps-10 pe-4`; profile text uses `text-start`), alongside the initial shared/admin RTL updates in commit `b40f300`.
+**Tests**: Not run for this documentation update; the latest RTL UI changes still need focused verification.
+**Issues**: `AdminTopBar.tsx` still uses physical left/right positioning for the mobile header offset, search icon, and dropdown menu. Convert those to logical positioning and verify both LTR and RTL layouts before marking the RTL pass complete.
+**Description**: Initial pass applies logical inline padding to the search input and start alignment to profile text. RTL support in the admin area remains in progress.
 
 ### 5. PHASE 6: Boutique EPI/EPC
 **Status**: todo

@@ -1,7 +1,7 @@
 # I18N IMPLEMENTATION STATUS
 
-**Last Updated**: 2026-10-04  
-**Status**: PART 1 COMPLETE — Foundation Ready, Implementation Incomplete
+**Last Updated**: 2026-10-05
+**Status**: PART 1 COMPLETE — RTL implementation in progress
 
 ---
 
@@ -148,6 +148,11 @@
 - Empty states: "No courses", "No students" → `t.admin.noCourses`, `t.admin.noStudents`
 
 ### 5. RTL CSS Implementation
+
+**Progress (2026-10-05)**:
+- `src/components/admin/AdminTopBar.tsx`: search input horizontal padding now uses Tailwind logical utilities (`ps-10 pe-4`), and profile text alignment uses `text-start`.
+- The top bar still uses physical-direction classes for responsive header offsets (`pl-*`/`pr-*`), search icon placement (`left-3`/`right-3`), and dropdown placement (`left-0`/`right-0`). These remain follow-up work; this component is not fully RTL-logical yet.
+- The latest RTL changes have not yet been verified with focused LTR/RTL UI tests.
 
 **Changes needed:**
 
