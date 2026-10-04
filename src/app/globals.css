@@ -1,26 +1,108 @@
 @import "tailwindcss";
 
+/* HSE BRIDGE Brand Tokens */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand Colors */
+  --hse-deep-green: #073022;
+  --hse-safety-yellow: #FDCD1A;
+  --hse-logo-gold: #D9A51F;
+  --hse-black: #0A0A0A;
+  --hse-white: #FFFFFF;
+
+  /* Semantic Colors */
+  --color-primary: var(--hse-deep-green);
+  --color-primary-light: #0a4030;
+  --color-primary-dark: #041a14;
+  --color-accent: var(--hse-safety-yellow);
+  --color-accent-hover: #e5b917;
+  --color-accent-light: #fef3cd;
+
+  /* Neutral Palette (for admin/dashboard dark mode) */
+  --color-background: #020817;
+  --color-surface: #0f172a;
+  --color-surface-hover: #1e293b;
+  --color-border: #334155;
+  --color-text: #e2e8f0;
+  --color-text-secondary: #94a3b8;
+  --color-text-tertiary: #64748b;
+
+  /* Public Site (light mode) */
+  --color-public-bg: var(--hse-white);
+  --color-public-text: var(--hse-black);
+  --color-public-surface: #f8fafc;
+  --color-public-border: #e2e8f0;
+
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Spacing & Layout */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Custom Tailwind Utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-hse-gradient {
+    background: linear-gradient(135deg, var(--hse-deep-green) 0%, var(--hse-logo-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-hse-gradient {
+    background: linear-gradient(135deg, var(--hse-deep-green) 0%, #0a4030 100%);
+  }
+
+  .shadow-hse {
+    box-shadow: 0 4px 14px 0 rgba(7, 48, 34, 0.15);
+  }
 }

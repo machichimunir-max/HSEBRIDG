@@ -1,0 +1,332 @@
+export type Locale = "fr" | "ar";
+
+export const defaultLocale: Locale = "fr";
+export const locales: Locale[] = ["fr", "ar"];
+
+export const localeNames: Record<Locale, string> = {
+  fr: "Français",
+  ar: "العربية",
+};
+
+export const localeDirections: Record<Locale, "ltr" | "rtl"> = {
+  fr: "ltr",
+  ar: "rtl",
+};
+
+export interface Translations {
+  common: {
+    brandName: string;
+    tagline: string;
+    slogan1: string;
+    slogan2: string;
+    slogan3: string;
+    slogan4: string;
+    login: string;
+    register: string;
+    logout: string;
+    dashboard: string;
+    search: string;
+    filter: string;
+    apply: string;
+    cancel: string;
+    save: string;
+    delete: string;
+    edit: string;
+    view: string;
+    loading: string;
+    error: string;
+    success: string;
+    seeMore: string;
+    contactUs: string;
+    requestQuote: string;
+    whatsappContact: string;
+    allRightsReserved: string;
+    send: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    company: string;
+    message: string;
+    subject: string;
+    category: string;
+    duration: string;
+    level: string;
+    price: string;
+    free: string;
+    certificateIncluded: string;
+    theoryPractice: string;
+    sendCv: string;
+    requestProfiles: string;
+  };
+  navigation: {
+    home: string;
+    formations: string;
+    boutique: string;
+    recrutement: string;
+    about: string;
+    contact: string;
+    admin: string;
+    student: string;
+    catalog: string;
+    myCourses: string;
+    myApplications: string;
+    settings: string;
+  };
+  pillars: {
+    formation: {
+      title: string;
+      subtitle: string;
+      description: string;
+      cta: string;
+      badge: string;
+      benefitsTitle: string;
+      benefits: string[];
+      trainingsListTitle: string;
+      trainings: Array<{
+        title: string;
+        code: string;
+        description: string;
+        duration: string;
+        badge: string;
+      }>;
+    };
+    boutique: {
+      title: string;
+      subtitle: string;
+      description: string;
+      cta: string;
+      badge: string;
+      benefitsTitle: string;
+      benefits: string[];
+      categoriesListTitle: string;
+      categories: Array<{
+        title: string;
+        description: string;
+        iconName: string;
+      }>;
+    };
+    recrutement: {
+      title: string;
+      subtitle: string;
+      description: string;
+      cta: string;
+      badge: string;
+      benefitsTitle: string;
+      benefits: string[];
+      domainsListTitle: string;
+      domains: Array<{
+        title: string;
+        description: string;
+      }>;
+      forCandidates: {
+        title: string;
+        description: string;
+        buttonText: string;
+      };
+      forEmployers: {
+        title: string;
+        description: string;
+        buttonText: string;
+      };
+    };
+  };
+  home: {
+    heroTitle: string;
+    heroSubtitle: string;
+    heroCtaPrimary: string;
+    heroCtaSecondary: string;
+    stats: {
+      formationsCount: string;
+      formationsLabel: string;
+      productsCount: string;
+      productsLabel: string;
+      candidatesCount: string;
+      candidatesLabel: string;
+      satisfactionRate: string;
+      satisfactionLabel: string;
+    };
+    whyUsTitle: string;
+    whyUsSubtitle: string;
+    contactCtaTitle: string;
+    contactCtaSubtitle: string;
+    contactCtaButton: string;
+  };
+  about: {
+    title: string;
+    subtitle: string;
+    storyTitle: string;
+    storyText1: string;
+    storyText2: string;
+    valuesTitle: string;
+    values: Array<{
+      title: string;
+      description: string;
+    }>;
+    missionTitle: string;
+    missionText: string;
+    visionTitle: string;
+    visionText: string;
+  };
+  contact: {
+    title: string;
+    subtitle: string;
+    formTitle: string;
+    infoTitle: string;
+    directWhatsAppText: string;
+    successMessage: string;
+  };
+  footer: {
+    description: string;
+    quickLinks: string;
+    contactInfo: string;
+    followUs: string;
+    phone: string;
+    email: string;
+    location: string;
+  };
+  auth: {
+    loginTitle: string;
+    registerTitle: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    passwordLabel: string;
+    passwordPlaceholder: string;
+    confirmPasswordLabel: string;
+    confirmPasswordPlaceholder: string;
+    nameLabel: string;
+    namePlaceholder: string;
+    noAccount: string;
+    hasAccount: string;
+    loginError: string;
+    registerError: string;
+    passwordMinLength: string;
+    passwordMismatch: string;
+    requiredField: string;
+  };
+  student: {
+    dashboardTitle: string;
+    myCoursesTitle: string;
+    activeCourses: string;
+    completedLessons: string;
+    overallProgress: string;
+    recentlyWatched: string;
+    noCoursesYet: string;
+    noLessonsWatched: string;
+    continueButton: string;
+    resumeButton: string;
+    lastWatched: string;
+    enrollButton: string;
+    enrolling: string;
+    enrollSuccess: string;
+    courseNotAvailable: string;
+    browseCatalog: string;
+    goToDashboard: string;
+    modules: string;
+    lessons: string;
+    lessonCompleted: string;
+    lessonNotStarted: string;
+    markComplete: string;
+    marking: string;
+    nextLesson: string;
+    previousLesson: string;
+    progressLabel: string;
+    lessonsCompleted: string;
+    learningTitle: string;
+    programTitle: string;
+    courseDetail: string;
+    loginToEnroll: string;
+    continueFormation: string;
+    preview: string;
+    locked: string;
+    welcome: string;
+  };
+  admin: {
+    sidebarDashboard: string;
+    sidebarCourses: string;
+    sidebarStudents: string;
+    sidebarEnrollments: string;
+    sidebarUsers: string;
+    sidebarSettings: string;
+    sidebarBoutique: string;
+    sidebarRecrutement: string;
+    sidebarCategories: string;
+    sidebarProducts: string;
+    sidebarQuotes: string;
+    sidebarJobs: string;
+    sidebarApplications: string;
+    sidebarCandidates: string;
+    sidebarEmployerRequests: string;
+    dashboardTitle: string;
+    coursesTitle: string;
+    studentsTitle: string;
+    enrollmentsTitle: string;
+    usersTitle: string;
+    settingsTitle: string;
+    createCourse: string;
+    editCourse: string;
+    publishCourse: string;
+    unpublishCourse: string;
+    deleteCourse: string;
+    noCourses: string;
+    noStudents: string;
+    noEnrollments: string;
+    enrollStudent: string;
+    manualEnrollment: string;
+    enrollmentStudentEmail: string;
+    enrollmentCourse: string;
+    selectCourse: string;
+    enrollmentActive: string;
+    enrollmentInactive: string;
+    actionsColumn: string;
+    viewStudent: string;
+    searchPlaceholder: string;
+    allCourses: string;
+    previousPage: string;
+    nextPage: string;
+    showingResults: string;
+    publishedStatus: string;
+    draftStatus: string;
+    totalStudents: string;
+    totalCourses: string;
+    totalEnrollments: string;
+    courseWizardBasic: string;
+    courseWizardInfo: string;
+    courseWizardContent: string;
+    courseWizardMedia: string;
+    courseWizardSeo: string;
+    courseWizardPublish: string;
+    saveDraft: string;
+    saveAndContinue: string;
+    back: string;
+    next: string;
+    courseTitle: string;
+    courseSlug: string;
+    courseDescription: string;
+    courseShortDescription: string;
+    courseCategory: string;
+    courseLevel: string;
+    courseDuration: string;
+    courseThumbnail: string;
+    addModule: string;
+    addLesson: string;
+    moduleTitle: string;
+    lessonTitle: string;
+    reorderItems: string;
+    confirmDelete: string;
+    confirmDeleteMessage: string;
+    yes: string;
+    no: string;
+  };
+  catalog: {
+    title: string;
+    subtitle: string;
+    searchPlaceholder: string;
+    allCategories: string;
+    allLevels: string;
+    resultsCount: string;
+    noResults: string;
+    viewCourse: string;
+    noDescription: string;
+    allLevelsOption: string;
+  };
+}
