@@ -3,11 +3,14 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useEffect } from "react";
+import { useI18n } from "@/lib/i18n/I18nContext";
+import { LanguageSwitcher } from "@/components/brand/LanguageSwitcher";
 
 const CATEGORIES = ["SST", "Incendie", "Travail en hauteur", "Risque électrique", "EPI", "ISO 45001", "ISO 14001", "LOTO"];
 const LEVELS = ["Débutant", "Intermédiaire", "Avancé"];
 
 export default function CatalogPage() {
+  const { t } = useI18n();
   const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -48,18 +51,21 @@ export default function CatalogPage() {
   return (
     <main className="min-h-screen bg-slate-950 px-4 py-10 text-slate-50 md:px-6">
       <div className="mx-auto max-w-6xl">
-        <header className="mb-8">
-          <p className="text-sm uppercase tracking-[0.2em] text-cyan-300">Catalog</p>
-          <h1 className="mt-2 text-3xl font-bold">Formations QHSE</h1>
-          <p className="mt-2 text-slate-400">Découvrez nos formations en ligne en Qualité, Hygiène, Sécurité et Environnement</p>
+        <header className="mb-8 flex items-start justify-between">
+          <div>
+            <p className="text-sm uppercase tracking-[0.2em] text-cyan-300">{t.navigation.catalog}</p>
+            <h1 className="mt-2 text-3xl font-bold">{t.catalog.title}</h1>
+            <p className="mt-2 text-slate-400">{t.catalog.subtitle}</p>
+          </div>
+          <LanguageSwitcher />
         </header>
 
         <div className="mb-8 space-y-4 rounded-3xl border border-slate-800 bg-slate-900 p-5">
           <div>
-            <label className="mb-2 block text-sm text-slate-300">Rechercher</label>
+            <label className="mb-2 block text-sm text-slate-300">{t.common.search}</label>
             <input
               type="text"
-              placeholder="Rechercher une formation..."
+              placeholder={t.catalog.searchPlaceholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full rounded-xl border border-slate-700 bg-slate-950 p-3 text-white placeholder-slate-500"
@@ -68,13 +74,13 @@ export default function CatalogPage() {
 
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="mb-2 block text-sm text-slate-300">Catégorie</label>
+              <label className="mb-2 block text-sm text-slate-300">{t.common.category}</label>
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 className="w-full rounded-xl border border-slate-700 bg-slate-950 p-3 text-white"
               >
-                <option value="">Toutes les catégories</option>
+                <option value="">{t.catalog.allCategories}</option>
                 {CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>
                     {cat}
@@ -83,13 +89,13 @@ export default function CatalogPage() {
               </select>
             </div>
             <div>
-              <label className="mb-2 block text-sm text-slate-300">Niveau</label>
+              <label className="mb-2 block text-sm text-slate-300">{t.common.level}</label>
               <select
                 value={selectedLevel}
                 onChange={(e) => setSelectedLevel(e.target.value)}
                 className="w-full rounded-xl border border-slate-700 bg-slate-950 p-3 text-white"
               >
-                <option value="">Tous les niveaux</option>
+                <option value="">{t.catalog.allLevels}</option>
                 {LEVELS.map((level) => (
                   <option key={level} value={level}>
                     {level}
@@ -101,14 +107,14 @@ export default function CatalogPage() {
         </div>
 
         {loading ? (
-          <div className="text-center text-slate-400">Chargement des formations...</div>
+          <div className="text-center text-slate-400">{t.common.loading}</div>
         ) : (
           <>
-            <p className="mb-4 text-sm text-slate-400">{filteredCourses.length} formation(s) trouvée(s)</p>
+            <p className="mb-4 text-sm text-slate-400">{filteredCourses.length} {t.catalog.resultsCount}</p>
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {filteredCourses.length === 0 ? (
                 <div className="col-span-full rounded-3xl border border-dashed border-slate-700 bg-slate-900 p-10 text-center text-slate-400">
-                  Aucune formation ne correspond à votre recherche.
+                  {t.catalog.noResults}
                 </div>
               ) : (
                 filteredCourses.map((course) => {
@@ -119,7 +125,7 @@ export default function CatalogPage() {
                         {course.thumbnail ? (
                           <img src={course.thumbnail} alt={course.title} className="h-full w-full object-cover" />
                         ) : (
-                          <div className="flex h-full items-center justify-center text-slate-500">Formation QHSE</div>
+                          <div className="flex h-full items-center justify-center text-slate-500">{t.catalog.title}</div>
                         )}
                       </div>
                       <div className="p-5">
@@ -128,18 +134,18 @@ export default function CatalogPage() {
                             {course.category || "QHSE"}
                           </span>
                           <span className="rounded-full border border-slate-700 px-2 py-1 text-xs text-slate-300">
-                            {course.level || "Tous niveaux"}
+                            {course.level || t.catalog.allLevelsOption}
                           </span>
                         </div>
                         <h2 className="mt-3 text-lg font-semibold text-white">{course.title}</h2>
-                        <p className="mt-2 text-sm text-slate-400">{course.shortDescription || course.description || "Aucune description"}</p>
+                        <p className="mt-2 text-sm text-slate-400">{course.shortDescription || course.description || t.catalog.noDescription}</p>
                         <div className="mt-4 flex items-center justify-between text-xs text-slate-400">
-                          <span>{course.modules?.length || 0} modules</span>
-                          <span>{totalLessons} leçons</span>
+                          <span>{course.modules?.length || 0} {t.student.modules}</span>
+                          <span>{totalLessons} {t.student.lessons}</span>
                           {course.duration && <span>{course.duration} min</span>}
                         </div>
                         <Link href={`/courses/${course.slug}`} className="mt-5 inline-block w-full rounded-xl bg-cyan-500 px-4 py-3 text-center font-medium text-slate-950 hover:bg-cyan-600">
-                          Voir la formation
+                          {t.catalog.viewCourse}
                         </Link>
                       </div>
                     </article>

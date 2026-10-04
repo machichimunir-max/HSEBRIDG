@@ -10,7 +10,7 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#041a14] px-6 py-10 relative">
-      <div className="absolute top-6 right-6">
+      <div className="absolute top-6 end-6">
         <LanguageSwitcher />
       </div>
 
@@ -28,28 +28,28 @@ export default function LoginPage() {
         <form className="space-y-5" action="/api/auth/login" method="POST">
           <div>
             <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-200">
-              Email
+              {t.auth.emailLabel}
             </label>
             <input
               id="email"
               type="email"
               name="email"
               className="w-full rounded-xl border border-slate-700 bg-[#041a14] px-3.5 py-2.5 text-white outline-none placeholder:text-slate-500 focus:border-[#FDCD1A] focus:ring-1 focus:ring-[#FDCD1A]"
-              placeholder="you@example.com"
+              placeholder={t.auth.emailPlaceholder}
               required
             />
           </div>
 
           <div>
             <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-200">
-              Mot de passe
+              {t.auth.passwordLabel}
             </label>
             <input
               id="password"
               type="password"
               name="password"
               className="w-full rounded-xl border border-slate-700 bg-[#041a14] px-3.5 py-2.5 text-white outline-none placeholder:text-slate-500 focus:border-[#FDCD1A] focus:ring-1 focus:ring-[#FDCD1A]"
-              placeholder="••••••••"
+              placeholder={t.auth.passwordPlaceholder}
               required
             />
           </div>
@@ -64,7 +64,7 @@ export default function LoginPage() {
 
         <div className="mt-6 border-t border-slate-700/80 pt-6 text-center">
           <p className="text-xs text-slate-300">
-            Vous n'avez pas de compte ?{" "}
+            {t.auth.noAccount}{" "}
             <Link href="/register" className="font-bold text-[#FDCD1A] hover:underline">
               {t.common.register}
             </Link>

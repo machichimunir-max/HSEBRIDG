@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LocalVideoPlayer } from "@/components/LocalVideoPlayer";
+import { useI18n } from "@/lib/i18n/I18nContext";
 
 export default function LearningPlayerClient({
   course,
@@ -11,6 +12,7 @@ export default function LearningPlayerClient({
   currentLessonId,
   userProgress,
 }: any) {
+  const { t } = useI18n();
   const router = useRouter();
   const [selectedLessonId, setSelectedLessonId] = useState(currentLessonId);
   const [loading, setLoading] = useState(false);
@@ -47,13 +49,13 @@ export default function LearningPlayerClient({
 
       if (!response.ok) {
         const data = await response.json();
-        setError(data.error || "Impossible de marquer la leçon comme terminée");
+        setError(data.error || t.student.markComplete);
         return;
       }
 
       router.refresh();
     } catch (err) {
-      setError("Erreur lors de la sauvegarde de la progression");
+      setError(t.common.error);
     } finally {
       setLoading(false);
     }
@@ -83,18 +85,18 @@ export default function LearningPlayerClient({
       <div className="mx-auto max-w-7xl">
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <p className="text-sm uppercase tracking-[0.2em] text-cyan-300">Apprentissage</p>
+            <p className="text-sm uppercase tracking-[0.2em] text-cyan-300">{t.student.learningTitle}</p>
             <h1 className="mt-2 text-3xl font-bold">{course.title}</h1>
           </div>
           <Link href="/student/dashboard" className="rounded-full border border-slate-700 px-4 py-2 text-sm text-slate-200">
-            Tableau de bord
+            {t.student.goToDashboard}
           </Link>
         </div>
 
         {/* Progress bar */}
         <div className="mb-6 rounded-2xl border border-slate-800 bg-slate-900 p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-slate-300">{completedCount} / {allLessons.length} leçons terminées</span>
+            <span className="text-sm text-slate-300">{completedCount} / {allLessons.length} {t.student.lessonsCompleted}</span>
             <span className="text-sm font-semibold text-cyan-300">{progressPercent}%</span>
           </div>
           <div className="h-2 rounded-full bg-slate-800">
@@ -105,7 +107,7 @@ export default function LearningPlayerClient({
         <div className="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
           {/* Sidebar - Curriculum */}
           <aside className="rounded-3xl border border-slate-800 bg-slate-900 p-5 h-fit">
-            <h2 className="mb-4 text-xl font-semibold">Programme</h2>
+            <h2 className="mb-4 text-xl font-semibold">{t.student.programTitle}</h2>
             <div className="space-y-4 max-h-[600px] overflow-y-auto">
               {modules.map((module: any) => (
                 <div key={module.id} className="rounded-2xl border border-slate-800 bg-slate-950/60 p-3">
@@ -163,11 +165,11 @@ export default function LearningPlayerClient({
                       {Math.round((currentLesson.durationSeconds ?? 180) / 60)} min
                     </span>
                     <span className="rounded-full border border-slate-700 px-3 py-1.5">
-                      {currentLesson.isPreview ? "Aperçu" : "Protégée"}
+                      {currentLesson.isPreview ? t.student.preview : t.student.locked}
                     </span>
                     {isCurrentLessonComplete && (
                       <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-emerald-300">
-                        ✓ Terminée
+                        ✓ {t.student.lessonCompleted}
                       </span>
                     )}
                   </div>
@@ -181,7 +183,7 @@ export default function LearningPlayerClient({
                       disabled={loading || isCurrentLessonComplete}
                       className="rounded-full bg-cyan-500 px-6 py-2.5 font-medium text-slate-950 disabled:opacity-50"
                     >
-                      {loading ? "Enregistrement..." : isCurrentLessonComplete ? "✓ Terminée" : "Marquer comme terminée"}
+                      {loading ? t.student.marking : isCurrentLessonComplete ? `✓ ${t.student.lessonCompleted}` : t.student.markComplete}
                     </button>
 
                     <button
@@ -189,7 +191,7 @@ export default function LearningPlayerClient({
                       disabled={!prevLesson}
                       className="rounded-full border border-slate-700 px-6 py-2.5 font-medium text-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      ← Précédente
+                      ← {t.student.previousLesson}
                     </button>
 
                     <button
@@ -197,7 +199,7 @@ export default function LearningPlayerClient({
                       disabled={!nextLesson}
                       className="rounded-full border border-slate-700 px-6 py-2.5 font-medium text-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Suivante →
+                      {t.student.nextLesson} →
                     </button>
                   </div>
 
@@ -206,7 +208,7 @@ export default function LearningPlayerClient({
               </>
             ) : (
               <div className="rounded-3xl border border-slate-800 bg-slate-900 p-8 text-center text-slate-300">
-                Aucune leçon publiée disponible.
+                {t.student.noLessonsWatched}
               </div>
             )}
           </section>

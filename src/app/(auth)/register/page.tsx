@@ -10,7 +10,7 @@ export default function RegisterPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#041a14] px-6 py-10 relative">
-      <div className="absolute top-6 right-6">
+      <div className="absolute top-6 end-6">
         <LanguageSwitcher />
       </div>
 
@@ -28,55 +28,55 @@ export default function RegisterPage() {
         <form className="space-y-4" action="/api/auth/register" method="POST">
           <div>
             <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-slate-200">
-              Nom complet
+              {t.auth.nameLabel}
             </label>
             <input
               id="name"
               type="text"
               name="name"
               className="w-full rounded-xl border border-slate-700 bg-[#041a14] px-3.5 py-2.5 text-white outline-none placeholder:text-slate-500 focus:border-[#FDCD1A] focus:ring-1 focus:ring-[#FDCD1A]"
-              placeholder="Votre nom complet"
+              placeholder={t.auth.namePlaceholder}
             />
           </div>
 
           <div>
             <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-200">
-              Email
+              {t.auth.emailLabel}
             </label>
             <input
               id="email"
               type="email"
               name="email"
               className="w-full rounded-xl border border-slate-700 bg-[#041a14] px-3.5 py-2.5 text-white outline-none placeholder:text-slate-500 focus:border-[#FDCD1A] focus:ring-1 focus:ring-[#FDCD1A]"
-              placeholder="vous@exemple.com"
+              placeholder={t.auth.emailPlaceholder}
               required
             />
           </div>
 
           <div>
             <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-slate-200">
-              Mot de passe
+              {t.auth.passwordLabel}
             </label>
             <input
               id="password"
               type="password"
               name="password"
               className="w-full rounded-xl border border-slate-700 bg-[#041a14] px-3.5 py-2.5 text-white outline-none placeholder:text-slate-500 focus:border-[#FDCD1A] focus:ring-1 focus:ring-[#FDCD1A]"
-              placeholder="Au moins 8 caractères"
+              placeholder={t.auth.passwordPlaceholder}
               required
             />
           </div>
 
           <div>
             <label htmlFor="confirmPassword" className="mb-1.5 block text-sm font-medium text-slate-200">
-              Confirmer le mot de passe
+              {t.auth.confirmPasswordLabel}
             </label>
             <input
               id="confirmPassword"
               type="password"
               name="confirmPassword"
               className="w-full rounded-xl border border-slate-700 bg-[#041a14] px-3.5 py-2.5 text-white outline-none placeholder:text-slate-500 focus:border-[#FDCD1A] focus:ring-1 focus:ring-[#FDCD1A]"
-              placeholder="Répétez le mot de passe"
+              placeholder={t.auth.confirmPasswordPlaceholder}
               required
             />
           </div>
@@ -91,7 +91,7 @@ export default function RegisterPage() {
 
         <div className="mt-6 border-t border-slate-700/80 pt-6 text-center">
           <p className="text-xs text-slate-300">
-            Vous avez déjà un compte ?{" "}
+            {t.auth.hasAccount}{" "}
             <Link href="/login" className="font-bold text-[#FDCD1A] hover:underline">
               {t.common.login}
             </Link>

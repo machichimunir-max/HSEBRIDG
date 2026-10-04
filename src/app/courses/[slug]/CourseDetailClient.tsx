@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useI18n } from "@/lib/i18n/I18nContext";
 
 export default function CourseDetailClient({ course, isEnrolled, currentUser }: any) {
+  const { t } = useI18n();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -23,13 +25,13 @@ export default function CourseDetailClient({ course, isEnrolled, currentUser }: 
 
       if (!response.ok) {
         const data = await response.json();
-        setError(data.error || "Échec de l'inscription");
+        setError(data.error || t.student.enrolling);
         return;
       }
 
       router.refresh();
     } catch (err) {
-      setError("Échec de l'inscription à la formation");
+      setError(t.student.enrolling);
     } finally {
       setLoading(false);
     }
@@ -41,7 +43,7 @@ export default function CourseDetailClient({ course, isEnrolled, currentUser }: 
         <div className="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900">
           <div className="grid gap-0 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="p-8">
-              <p className="text-sm uppercase tracking-[0.2em] text-cyan-300">Détails de la formation</p>
+              <p className="text-sm uppercase tracking-[0.2em] text-cyan-300">{t.student.courseDetail}</p>
               <h1 className="mt-4 text-4xl font-bold">{course.title}</h1>
               <p className="mt-4 max-w-xl text-slate-300">{course.description || course.shortDescription}</p>
 
@@ -52,8 +54,8 @@ export default function CourseDetailClient({ course, isEnrolled, currentUser }: 
                   </span>
                 )}
                 {course.level && <span className="rounded-full border border-slate-700 px-3 py-1.5">{course.level}</span>}
-                <span className="rounded-full border border-slate-700 px-3 py-1.5">{course.modules?.length || 0} modules</span>
-                <span className="rounded-full border border-slate-700 px-3 py-1.5">{totalLessons} leçons</span>
+                <span className="rounded-full border border-slate-700 px-3 py-1.5">{course.modules?.length || 0} {t.student.modules}</span>
+                <span className="rounded-full border border-slate-700 px-3 py-1.5">{totalLessons} {t.student.lessons}</span>
                 {course.duration && <span className="rounded-full border border-slate-700 px-3 py-1.5">{course.duration} min</span>}
               </div>
 
@@ -65,7 +67,7 @@ export default function CourseDetailClient({ course, isEnrolled, currentUser }: 
                       disabled={loading}
                       className="rounded-full bg-cyan-500 px-6 py-3 font-medium text-slate-950 disabled:opacity-50"
                     >
-                      {loading ? "Inscription en cours..." : "S'inscrire à cette formation"}
+                      {loading ? t.student.enrolling : t.student.enrollButton}
                     </button>
                     {error && <p className="mt-3 text-sm text-rose-300">{error}</p>}
                   </div>
@@ -76,7 +78,7 @@ export default function CourseDetailClient({ course, isEnrolled, currentUser }: 
                     href={`/courses/${course.slug}/learn`}
                     className="inline-block rounded-full bg-emerald-500 px-6 py-3 font-medium text-slate-950"
                   >
-                    Continuer la formation
+                    {t.student.continueFormation}
                   </Link>
                 ) : null}
 
@@ -85,7 +87,7 @@ export default function CourseDetailClient({ course, isEnrolled, currentUser }: 
                     href="/login"
                     className="inline-block rounded-full border border-slate-700 px-6 py-3 font-medium text-slate-100"
                   >
-                    Se connecter pour s'inscrire
+                    {t.student.loginToEnroll}
                   </Link>
                 ) : null}
               </div>
@@ -96,7 +98,7 @@ export default function CourseDetailClient({ course, isEnrolled, currentUser }: 
                 <img src={course.thumbnail} alt={course.title} className="h-full min-h-[220px] w-full rounded-3xl object-cover" />
               ) : (
                 <div className="flex h-full min-h-[220px] items-center justify-center rounded-3xl bg-slate-800 text-slate-400">
-                  Miniature de la formation
+                  {t.catalog.title}
                 </div>
               )}
             </div>
@@ -104,7 +106,7 @@ export default function CourseDetailClient({ course, isEnrolled, currentUser }: 
         </div>
 
         <section className="mt-8 rounded-3xl border border-slate-800 bg-slate-900 p-6">
-          <h2 className="mb-5 text-2xl font-semibold">Programme</h2>
+          <h2 className="mb-5 text-2xl font-semibold">{t.student.programTitle}</h2>
           <div className="space-y-5">
             {course.modules?.map((module: any) => (
               <div key={module.id} className="rounded-2xl border border-slate-800 bg-slate-950/50 p-4">
@@ -115,7 +117,7 @@ export default function CourseDetailClient({ course, isEnrolled, currentUser }: 
                     <div key={lesson.id} className="flex items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-900 px-3 py-2">
                       <span className="text-slate-200">{lesson.title}</span>
                       <span className="text-xs uppercase tracking-[0.2em] text-slate-400">
-                        {lesson.isPreview ? "Aperçu" : "Protégée"}
+                        {lesson.isPreview ? t.student.preview : t.student.locked}
                       </span>
                     </div>
                   ))}
