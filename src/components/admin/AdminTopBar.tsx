@@ -43,7 +43,7 @@ export function AdminTopBar({ userName, userEmail }: AdminTopBarProps) {
 
   return (
     <header className="sticky top-0 z-30 h-16 border-b border-slate-800 bg-slate-900/95 backdrop-blur-sm">
-      <div className="flex h-full items-center justify-between px-6 pl-16 lg:pl-6 ltr:pl-16 rtl:pr-16 lg:ltr:pl-6 lg:rtl:pr-6">
+      <div className={`flex h-full items-center justify-between px-6 ${isRtl ? 'ps-16 lg:ps-6' : 'ps-16 lg:ps-6'}`}>
         {/* Search */}
         <div className="flex-1 max-w-md lg:max-w-xl">
           <div className="relative">

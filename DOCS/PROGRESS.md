@@ -23,7 +23,7 @@
 
 ### 2. i18n chunk B: Admin area Arabic + switcher
 **Status**: done  
-**Completed**: 2026-10-04  
+**Completed**: 2026-10-05  
 **Files changed**: 
 - `src/app/(dashboard)/admin/students/page.tsx` (i18n)
 - `src/app/(dashboard)/admin/students/ClientStudentsPageHeader.tsx` (new)
@@ -31,14 +31,16 @@
 - `src/app/(dashboard)/admin/enrollments/ClientEnrollmentsPageHeader.tsx` (new)
 - `src/components/admin/EnrollmentsTableClient.tsx` (i18n - all hardcoded strings replaced)
 - `src/components/admin/ManualEnrollDialog.tsx` (i18n - all hardcoded strings replaced)
+- `src/components/admin/StudentsTableClient.tsx` (full i18n + RTL: search icon, table headers, pagination, empty state, "View details" link with RTL arrow)
+- `src/lib/i18n/locales/fr.ts` (added 14 keys: unnamed, studentName, studentEmail, enrolledCourses, studentJoined, viewDetails, pagination*)
+- `src/lib/i18n/locales/ar.ts` (added 14 keys: same as FR)
+- `src/lib/i18n/types.ts` (added student.progress, admin.unnamed, admin.studentName, admin.studentEmail, admin.enrolledCourses, admin.studentJoined, admin.viewDetails, admin.pagination*)
 - `tests/admin-arabic.spec.ts` (new test suite)
 **Tests**: 
 - `npm run build` (success)
-- `npx tsx scripts/check-translation-keys.ts` (299 keys FR/AR, all in sync)
-- `npx playwright test tests/student-arabic.spec.ts` (5/5 passed - student area Arabic works)
-- `npx playwright test tests/auth-flow.spec.ts` (9/9 passed)
-**Issues**: Admin area i18n complete for students page, enrollments page, EnrollmentsTableClient, and ManualEnrollDialog. Admin sidebar, dashboard, and courses table were completed in previous commit (ef32ee5). RTL CSS and remaining admin pages (courses wizard, settings, users) remain for chunks C and D.  
-**Description**: Completed remaining admin area pages for Task 2: students list, enrollments list with search/filter/pagination, manual enrollment dialog. All use translation keys, FR/AR parity maintained, loading/empty states translated.
+- `npx tsx scripts/check-translation-keys.ts` (321 keys FR/AR, all in sync)
+**Issues**: None. Admin area i18n fully complete for students page with RTL support. Admin sidebar, dashboard, courses table, enrollments, and students all translated.  
+**Description**: Completed Task 2 fully: students table now uses i18n for all strings (table headers, pagination controls, empty states, action links), with RTL-aware positioning for search icon, table alignment, and chevron arrows. FR/AR key parity maintained at 321 keys.
 
 ### 3. i18n chunk C: Wizard, dialogs, toasts, validation
 **Status**: partial (foundation done, form labels deferred)  
