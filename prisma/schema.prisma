@@ -183,3 +183,93 @@ model PasswordResetToken {
   @@index([userId])
   @@index([expiresAt])
 }
+
+// BOUTIQUE EPI/EPC MODELS
+
+enum QuoteStatus {
+  NEW
+  CONTACTED
+  QUOTED
+  WON
+  LOST
+}
+
+model ProductCategory {
+  id                    String                 @id @default(cuid())
+  slug                  String                 @unique
+  titleFr               String
+  titleAr               String
+  descriptionFr         String?
+  descriptionAr         String?
+  icon                  String?
+  order                 Int                    @default(0)
+  isVisible             Boolean                @default(true)
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  products              Product[]
+
+  @@index([isVisible, order])
+}
+
+model Product {
+  id                    String                 @id @default(cuid())
+  categoryId            String
+  sku                   String?                @unique
+  titleFr               String
+  titleAr               String
+  descriptionFr         String?
+  descriptionAr         String?
+  shortDescFr           String?
+  shortDescAr           String?
+  images                String[]               @default([])
+  price                 Decimal?               @db.Decimal(10, 2)
+  stockStatus           String                 @default("in_stock")
+  certifications        String[]               @default([])
+  specifications        Json?
+  isVisible             Boolean                @default(true)
+  isFeatured            Boolean                @default(false)
+  order                 Int                    @default(0)
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  category              ProductCategory        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  quoteItems            QuoteRequestItem[]
+
+  @@index([categoryId, isVisible])
+  @@index([isFeatured])
+}
+
+model QuoteRequest {
+  id                    String                 @id @default(cuid())
+  fullName              String
+  company               String?
+  phone                 String
+  email                 String
+  categoryName          String?
+  message               String
+  status                QuoteStatus            @default(NEW)
+  adminNotes            String?
+  submittedAt           DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  items                 QuoteRequestItem[]
+
+  @@index([status, submittedAt])
+  @@index([email])
+}
+
+model QuoteRequestItem {
+  id                    String                 @id @default(cuid())
+  quoteRequestId        String
+  productId             String?
+  productName           String
+  quantity              Int?
+  notes                 String?
+
+  quoteRequest          QuoteRequest           @relation(fields: [quoteRequestId], references: [id], onDelete: Cascade)
+  product               Product?               @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([quoteRequestId])
+  @@index([productId])
+}

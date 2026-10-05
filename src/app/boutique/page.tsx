@@ -23,10 +23,35 @@ export default function BoutiquePage() {
   });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmitQuote = (e: React.FormEvent) => {
+  const handleSubmitQuote = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    // In later phase wired to real API endpoint
+
+    try {
+      const response = await fetch("/api/boutique/quote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(quoteForm),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit quote request");
+      }
+
+      setSubmitted(true);
+      // Reset form
+      setQuoteForm({
+        fullName: "",
+        company: "",
+        phone: "",
+        email: "",
+        category: "",
+        quantity: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error submitting quote:", error);
+      alert("Une erreur s'est produite. Veuillez réessayer.");
+    }
   };
 
   return (

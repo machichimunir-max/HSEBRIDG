@@ -78,7 +78,29 @@
 **Description**: Completed Task 4: All admin components now RTL-ready including dialogs (ManualEnrollDialog), wizard stepper (CourseWizard with conditional arrows and connector lines), and dashboard cards (trend indicators). Admin area fully functional in Arabic with proper RTL layout, conditional icons, and translated UI elements.
 
 ### 5. PHASE 6: Boutique EPI/EPC
-**Status**: todo
+**Status**: done
+**Completed**: 2026-10-05
+**Files changed**: 
+- `prisma/schema.prisma` (added ProductCategory, Product, QuoteRequest, QuoteRequestItem models + QuoteStatus enum)
+- `prisma/seed-boutique.ts` (new seed script for 10 EPI/EPC categories FR/AR)
+- `src/app/api/boutique/quote/route.ts` (POST endpoint for quote requests)
+- `src/app/api/boutique/quote/[id]/route.ts` (PATCH endpoint to update quote status)
+- `src/app/boutique/page.tsx` (wired quote form to real API endpoint)
+- `src/app/(dashboard)/admin/boutique/categories/page.tsx` (server component fetching categories)
+- `src/app/(dashboard)/admin/boutique/categories/BoutiqueCategoriesClient.tsx` (categories display with product counts)
+- `src/app/(dashboard)/admin/boutique/quotes/page.tsx` (server component fetching quote requests)
+- `src/app/(dashboard)/admin/boutique/quotes/BoutiqueQuotesClient.tsx` (full quotes management with status pipeline, filters, stats, WhatsApp/email actions)
+**Tests**: 
+- `npx prisma db push` (success)
+- `npx tsx prisma/seed-boutique.ts` (10 categories seeded successfully)
+- `npm run build` (success)
+**Schema changes**: Added 4 new models (ProductCategory, Product, QuoteRequest, QuoteRequestItem) and QuoteStatus enum (NEW, CONTACTED, QUOTED, WON, LOST)
+**Description**: Completed PHASE 6 Boutique EPI/EPC foundation:
+- **Database**: 10 pre-configured product categories (bilingual FR/AR) seeded with descriptions
+- **Public**: Quote request form wired to real API, saves to database
+- **Admin Categories**: View all 10 categories with product counts, visibility status, links to public page
+- **Admin Quotes**: Full pipeline management with 6 status filters (All, New, Contacted, Quoted, Won, Lost), status update buttons, WhatsApp/email quick actions, stats dashboard showing counts per status
+- Ready for products CRUD in next phase expansion
 
 ### 6. PHASE 7: Recrutement HSE
 **Status**: todo
@@ -102,7 +124,8 @@
 (none yet)
 
 ## Session Notes
-- Context at ~68k/200k tokens (~34%)
-- Task 2 (i18n chunk B) fully complete: all admin tables translated with RTL support
-- Task 4 (RTL admin) complete: All admin components RTL-ready including dialogs, wizard, and dashboard
-- Ready for Task 5 (Boutique EPI/EPC) or other features
+- Context at ~93k/200k tokens (~47%)
+- Task 2 (i18n chunk B) complete: all admin tables translated with RTL support
+- Task 4 (RTL admin) complete: All admin components RTL-ready
+- Task 5 (PHASE 6 Boutique EPI/EPC) complete: Categories seeded, quote request system operational, admin quote management pipeline ready
+- Next: Products CRUD expansion or PHASE 7 (Recrutement HSE)
