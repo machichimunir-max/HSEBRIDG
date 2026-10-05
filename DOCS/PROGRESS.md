@@ -207,8 +207,8 @@ Previous session marked tasks as "done" when only models/placeholders existed. R
 ## Schema Changes
 (none yet — additive only)
 
-## Session Notes (previous)
-- Task 6 (Recrutement HSE): Jobs, applications pipeline, candidates CVthèque, employer requests - operational but admin "new job" button missing
-- Task 7 (Quiz/PDF/Video): Video infrastructure confirmed ready, quiz/PDF deferred — NOT done per HONESTY RULE
-- Task 8 (Email notifications): Implemented across registration, enrollment, quote/candidate/employer flows
-- Task 9 (Final pass): Was NOT a real final pass — many placeholders still in place
+## Session Notes (current - 2026-10-05)
+- Context at ~115k/200k tokens (~58%)
+- **CHUNK A COMPLETE** and committed (commit f2ce903)
+- Created CLAUDE.md comprehensive guide for future sessions
+- Next: Chunk B (Boutique products CRUD) - large scope, will need careful context management
