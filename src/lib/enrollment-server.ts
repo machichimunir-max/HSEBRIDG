@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
+import { sendEmail, enrollmentEmail } from "@/lib/email";
 
 // STUDENT: Enroll in a course
 export async function enrollInCourse(courseId: string) {
@@ -14,7 +15,7 @@ export async function enrollInCourse(courseId: string) {
     // Verify course exists and is published
     const course = await prisma.course.findUnique({
       where: { id: courseId },
-      select: { isPublished: true },
+      select: { isPublished: true, title: true },
     });
 
     if (!course || !course.isPublished) {
@@ -43,6 +44,15 @@ export async function enrollInCourse(courseId: string) {
         isActive: true,
       },
     });
+
+    // Fire-and-forget enrollment confirmation email
+    const student = await prisma.user.findUnique({
+      where: { id: user.userId },
+      select: { email: true, name: true },
+    });
+    if (student && course.title) {
+      void sendEmail(enrollmentEmail(student.name, student.email, course.title));
+    }
 
     return { success: true, enrollmentId: enrollment.id };
   } catch (error) {

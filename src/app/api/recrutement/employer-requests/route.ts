@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { sendEmail, employerRequestEmail } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   try {
@@ -27,6 +28,10 @@ export async function POST(req: NextRequest) {
         status: "NEW",
       },
     });
+
+    // Notify admin
+    const adminEmail = process.env.ADMIN_EMAIL || "admin@hsebridge.ma";
+    void sendEmail(employerRequestEmail(adminEmail, company, description || positionNeeded));
 
     return NextResponse.json({
       success: true,

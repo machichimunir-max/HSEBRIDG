@@ -37,6 +37,8 @@ model User {
 
   enrollments           Enrollment[]
   lessonProgress        LessonProgress[]
+  quizAttempts          QuizAttempt[]
+  attestations          Attestation[]
   passwordResetTokens   PasswordResetToken[]
   videoAccessTokens     VideoAccessToken[]
 
@@ -62,6 +64,8 @@ model Course {
 
   modules               Module[]
   enrollments           Enrollment[]
+  quiz                  Quiz?
+  attestations          Attestation[]
 
   @@index([isPublished, isFree])
   @@index([slug])
@@ -374,4 +378,66 @@ model EmployerRequest {
 
   @@index([status, submittedAt])
   @@index([domain])
+}
+
+// QUIZ & ATTESTATION MODELS
+
+model Quiz {
+  id                    String                 @id @default(cuid())
+  courseId              String                 @unique
+  passingScore          Int                    @default(70)
+  timeLimit             Int?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  course                Course                 @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  questions             QuizQuestion[]
+  attempts              QuizAttempt[]
+
+  @@index([courseId])
+}
+
+model QuizQuestion {
+  id                    String                 @id @default(cuid())
+  quizId                String
+  question              String
+  options               String[]
+  correctAnswer         Int
+  order                 Int
+
+  quiz                  Quiz                   @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@index([quizId])
+}
+
+model QuizAttempt {
+  id                    String                 @id @default(cuid())
+  userId                String
+  quizId                String
+  score                 Int
+  passed                Boolean
+  answers               Json
+  completedAt           DateTime               @default(now())
+
+  user                  User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz                  Quiz                   @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@index([userId, quizId])
+  @@index([completedAt])
+}
+
+model Attestation {
+  id                    String                 @id @default(cuid())
+  userId                String
+  courseId              String
+  certificateNumber     String                 @unique
+  issuedAt              DateTime               @default(now())
+  pdfUrl                String?
+
+  user                  User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course                Course                 @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@index([userId])
+  @@index([courseId])
 }

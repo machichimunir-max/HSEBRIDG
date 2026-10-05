@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import { hashPassword } from "@/lib/auth";
 import { registerSchema } from "@/lib/auth-schemas";
 import { createSession } from "@/lib/session";
+import { sendEmail, welcomeEmail } from "@/lib/email";
 
 export async function POST(request: NextRequest) {
   try {
@@ -58,6 +59,9 @@ export async function POST(request: NextRequest) {
       email: user.email,
       role: user.role,
     });
+
+    // Fire-and-forget welcome email (never blocks registration)
+    void sendEmail(welcomeEmail(user.name, user.email));
 
     // Redirect to student dashboard
     return NextResponse.redirect(new URL("/student", request.url), {
