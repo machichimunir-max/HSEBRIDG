@@ -5,7 +5,8 @@ import { FormationIcon, BoutiqueIcon, RecrutementIcon } from "@/components/icons
 import { useI18n } from "@/lib/i18n/I18nContext";
 
 export function AdminDashboardClient({ analytics }: { analytics: any }) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const isRtl = locale === "ar";
 
   return (
     <div className="mx-auto max-w-7xl">
@@ -49,6 +50,7 @@ export function AdminDashboardClient({ analytics }: { analytics: any }) {
                 className={`mt-2 flex items-center gap-1 text-xs font-semibold ${
                   analytics.formation.enrollmentTrend >= 0 ? "text-emerald-400" : "text-red-400"
                 }`}
+                dir="ltr"
               >
                 {analytics.formation.enrollmentTrend >= 0 ? "↑" : "↓"}
                 {Math.abs(analytics.formation.enrollmentTrend).toFixed(1)}% {t.admin.vsLastMonth}

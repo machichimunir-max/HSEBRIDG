@@ -95,7 +95,7 @@ export function ManualEnrollDialog({ courses, onClose, onSuccess }: ManualEnroll
             </div>
           )}
 
-          <div className="flex gap-3 pt-2">
+          <div className="flex gap-3 pt-2" dir="ltr">
             <button
               type="button"
               onClick={onClose}

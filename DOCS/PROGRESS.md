@@ -57,17 +57,25 @@
 **Description**: Added validation translation keys and updated CourseWizard navigation. Foundation for wizard i18n complete; comprehensive form label translation deferred to allow progress on RTL implementation and other features.
 
 ### 4. i18n chunk D: Full RTL in admin
-**Status**: partial (AdminTopBar and all tables RTL-ready, dialogs and wizard remain)
-**Started**: 2026-10-05
+**Status**: done
+**Completed**: 2026-10-05
 **Files changed**: 
 - `src/components/admin/AdminTopBar.tsx` (mobile padding logical `ps-16 lg:ps-6`, search icon conditional, dropdown menu conditional)
 - `src/components/admin/AdminSidebar.tsx` (RTL sidebar positioning, border, chevron rotation, submenu borders - b40f300)
 - `src/components/admin/StudentsTableClient.tsx` (RTL: search icon, table text-start, action column, arrow, pagination i18n)
 - `src/components/admin/EnrollmentsTableClient.tsx` (RTL: search icon, table text-start, action column justify, pagination i18n)
 - `src/components/admin/CoursesTableClient.tsx` (RTL: search icon, action column alignment, status badge positioning)
-**Tests**: `npm run build` (success after each commit)
-**Issues**: Remaining: ManualEnrollDialog, CourseWizard stepper, admin dashboard cards need RTL verification.
-**Description**: All admin tables now RTL-complete with conditional search icons, action column alignment, and translated pagination. Core navigation and data tables work correctly in Arabic layout.
+- `src/components/admin/ManualEnrollDialog.tsx` (RTL: button order with `dir="ltr"`)
+- `src/components/admin/CourseWizard.tsx` (RTL: stepper connector lines, conditional nav arrows, i18n for previous/next/saving/publishing)
+- `src/app/(dashboard)/admin/AdminDashboardClient.tsx` (RTL: trend indicator with `dir="ltr"`)
+- `src/lib/i18n/locales/fr.ts` (added 3 keys: previous, saving, publishing)
+- `src/lib/i18n/locales/ar.ts` (added 3 keys: previous, saving, publishing)
+- `src/lib/i18n/types.ts` (added previous, saving, publishing to admin section)
+**Tests**: 
+- `npm run build` (success)
+- `npx tsx scripts/check-translation-keys.ts` (324 keys FR/AR, all in sync)
+**Issues**: None. Full RTL implementation complete across admin area.
+**Description**: Completed Task 4: All admin components now RTL-ready including dialogs (ManualEnrollDialog), wizard stepper (CourseWizard with conditional arrows and connector lines), and dashboard cards (trend indicators). Admin area fully functional in Arabic with proper RTL layout, conditional icons, and translated UI elements.
 
 ### 5. PHASE 6: Boutique EPI/EPC
 **Status**: todo
@@ -94,7 +102,7 @@
 (none yet)
 
 ## Session Notes
-- Context at ~109k/200k tokens (~54%)
+- Context at ~68k/200k tokens (~34%)
 - Task 2 (i18n chunk B) fully complete: all admin tables translated with RTL support
-- Task 4 (RTL admin) ~70% complete: AdminTopBar, AdminSidebar, all tables RTL-ready
-- Remaining for Task 4: ManualEnrollDialog, CourseWizard stepper, dashboard cards
+- Task 4 (RTL admin) complete: All admin components RTL-ready including dialogs, wizard, and dashboard
+- Ready for Task 5 (Boutique EPI/EPC) or other features

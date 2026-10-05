@@ -61,8 +61,9 @@ interface CourseFormData {
 
 export default function CourseWizard() {
   const router = useRouter();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const steps = getSteps();
+  const isRtl = locale === "ar";
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -339,6 +340,7 @@ export default function CourseWizard() {
                   className={`mx-4 h-0.5 w-16 lg:w-24 ${
                     step.id < currentStep ? "bg-[#073022]" : "bg-slate-800"
                   }`}
+                  style={{ order: isRtl ? -1 : undefined }}
                 />
               )}
             </div>
@@ -852,13 +854,19 @@ export default function CourseWizard() {
             disabled={currentStep === 1}
             className="flex items-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent"
           >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Previous
+            {isRtl ? (
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            ) : (
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            )}
+            {t.admin.previous || "Previous"}
           </button>
 
-          <div className="flex gap-3">
+          <div className="flex gap-3" dir="ltr">
             {currentStep === steps.length ? (
               <>
                 <button
@@ -866,14 +874,14 @@ export default function CourseWizard() {
                   disabled={loading}
                   className="rounded-lg border border-slate-700 px-5 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-slate-800 disabled:opacity-50"
                 >
-                  {loading ? "Saving..." : "Save as Draft"}
+                  {loading ? (t.admin.saving || "Saving...") : (t.admin.saveDraft || "Save as Draft")}
                 </button>
                 <button
                   onClick={() => handleSubmit(true)}
                   disabled={loading}
                   className="flex items-center gap-2 rounded-lg bg-[#FDCD1A] px-5 py-2 text-sm font-medium text-[#0A0A0A] transition-colors hover:bg-[#e5b917] disabled:opacity-50"
                 >
-                  {loading ? "Publishing..." : "Publish Course"}
+                  {loading ? (t.admin.publishing || "Publishing...") : (t.admin.publishCourse || "Publish Course")}
                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -884,10 +892,16 @@ export default function CourseWizard() {
                 onClick={nextStep}
                 className="flex items-center gap-2 rounded-lg bg-[#FDCD1A] px-5 py-2 text-sm font-medium text-[#0A0A0A] transition-colors hover:bg-[#e5b917]"
               >
-                Next
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+                {t.admin.next || "Next"}
+                {isRtl ? (
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                ) : (
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                )}
               </button>
             )}
           </div>

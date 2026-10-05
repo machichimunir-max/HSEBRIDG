@@ -322,6 +322,9 @@ export interface Translations {
     saveAndContinue: string;
     back: string;
     next: string;
+    previous: string;
+    saving: string;
+    publishing: string;
     courseTitle: string;
     courseSlug: string;
     courseDescription: string;
