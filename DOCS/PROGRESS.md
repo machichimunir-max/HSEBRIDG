@@ -92,3 +92,9 @@
 
 ## Schema Changes
 (none yet)
+
+## Session Notes
+- Context at ~109k/200k tokens (~54%)
+- Task 2 (i18n chunk B) fully complete: all admin tables translated with RTL support
+- Task 4 (RTL admin) ~70% complete: AdminTopBar, AdminSidebar, all tables RTL-ready
+- Remaining for Task 4: ManualEnrollDialog, CourseWizard stepper, dashboard cards
