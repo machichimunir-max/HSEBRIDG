@@ -15,7 +15,8 @@ type Course = {
   level: string | null;
   isPublished: boolean;
   modules: { id: string }[];
-  enrollments: { id: string }[];
+  // API returns _count.enrollments (number), not an enrollments array
+  _count: { enrollments: number };
   createdAt: string;
 };
 
@@ -206,7 +207,11 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
       {sortedCourses.length === 0 && (
         <div className="rounded-3xl border border-dashed border-slate-700 bg-slate-900/50 p-12 text-center">
           <div className="mx-auto max-w-sm">
-            <div className="mb-4 text-4xl">📚</div>
+            <div className="mb-4 flex justify-center">
+              <svg className="h-12 w-12 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+              </svg>
+            </div>
             <h3 className="text-lg font-semibold text-white">
               {t.admin.noCourses}
             </h3>
@@ -250,7 +255,7 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
                     <td className="px-6 py-4 text-sm text-slate-300">{course.category || "—"}</td>
                     <td className="px-6 py-4 text-sm text-slate-300">{course.level || "—"}</td>
                     <td className="px-6 py-4 text-sm text-slate-300">{course.modules.length}</td>
-                    <td className="px-6 py-4 text-sm text-slate-300">{course.enrollments.length}</td>
+                    <td className="px-6 py-4 text-sm text-slate-300">{course._count.enrollments}</td>
                     <td className="px-6 py-4">
                       <span
                         className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${
@@ -336,14 +341,20 @@ export function CoursesTableClient({ courses }: CoursesTableClientProps) {
 
                 {/* Meta */}
                 <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-slate-400">
-                  {course.category && <span className="flex items-center gap-1">📂 {course.category}</span>}
-                  {course.level && <span className="flex items-center gap-1">📊 {course.level}</span>}
+                  {course.category && <span className="flex items-center gap-1">
+                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
+                    {course.category}
+                  </span>}
+                  {course.level && <span className="flex items-center gap-1">
+                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>
+                    {course.level}
+                  </span>}
                 </div>
 
                 <div className="mt-4 flex items-center gap-4 text-sm text-slate-300">
                   <span>{course.modules.length} {t.student.modules}</span>
                   <span>•</span>
-                  <span>{course.enrollments.length} {t.admin.sidebarStudents}</span>
+                  <span>{course._count.enrollments} {t.admin.sidebarStudents}</span>
                 </div>
 
                 {/* Actions */}

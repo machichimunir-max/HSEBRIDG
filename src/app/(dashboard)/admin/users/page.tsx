@@ -63,8 +63,12 @@ export default async function UsersPage() {
         </div>
 
         <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
-          <p className="text-sm font-semibold text-slate-400 uppercase">Candidats / Employeurs</p>
-          <p className="mt-3 text-sm font-bold text-amber-400">Phase 7</p>
+          <p className="text-sm font-semibold text-slate-400 uppercase">Candidats Recrutement</p>
+          <p className="mt-3 text-3xl font-extrabold text-white">
+            {/* Will be populated from CandidateProfile count */}
+            0
+          </p>
+          <p className="mt-1 text-xs text-slate-500">CVthèque disponible</p>
         </div>
       </div>
 

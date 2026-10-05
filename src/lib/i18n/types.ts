@@ -360,11 +360,10 @@ export interface Translations {
     pillarBoutique: string;
     pillarBoutiqueDesc: string;
     catalogProducts: string;
-    availablePhase6: string;
     quoteRequests: string;
     pendingQuotes: string;
     moduleStatus: string;
-    waitingPhase6: string;
+    boutiqueOperational: string;
     catalogAndQuotes: string;
     manageCategories: string;
     manageProducts: string;
@@ -374,7 +373,7 @@ export interface Translations {
     activeJobs: string;
     applications: string;
     newApplications: string;
-    waitingPhase7: string;
+    recrutementOperational: string;
     jobsAndCVs: string;
     manageJobs: string;
     viewApplications: string;

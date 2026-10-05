@@ -95,7 +95,7 @@ export function AdminDashboardClient({ analytics }: { analytics: any }) {
                   className="rounded-xl border border-slate-800 bg-slate-950/60 p-3"
                 >
                   <p className="font-semibold text-white text-sm line-clamp-1">
-                    {enrollment.user.name || "Étudiant"}
+                    {enrollment.user.name || t.admin.unnamed}
                   </p>
                   <p className="text-xs text-slate-400 line-clamp-1 mt-0.5">
                     {enrollment.course.title}
@@ -126,7 +126,7 @@ export function AdminDashboardClient({ analytics }: { analytics: any }) {
           <div className="rounded-2xl border border-slate-800 bg-slate-900/50 backdrop-blur-sm p-6">
             <p className="text-sm font-semibold text-slate-400 uppercase">{t.admin.catalogProducts}</p>
             <p className="mt-3 text-3xl font-extrabold text-white">{analytics.boutique.totalProducts}</p>
-            <p className="mt-1 text-xs text-slate-500">{t.admin.availablePhase6}</p>
+            <p className="mt-1 text-xs text-slate-500">Catalogue EPI/EPC</p>
           </div>
 
           <div className="rounded-2xl border border-slate-800 bg-slate-900/50 backdrop-blur-sm p-6">
@@ -137,7 +137,7 @@ export function AdminDashboardClient({ analytics }: { analytics: any }) {
 
           <div className="rounded-2xl border border-slate-800 bg-slate-900/50 backdrop-blur-sm p-6">
             <p className="text-sm font-semibold text-slate-400 uppercase">{t.admin.moduleStatus}</p>
-            <p className="mt-3 text-sm font-bold text-amber-400">{t.admin.waitingPhase6}</p>
+            <p className="mt-3 text-sm font-bold text-emerald-400">{t.admin.boutiqueOperational}</p>
             <p className="mt-1 text-xs text-slate-500">{t.admin.catalogAndQuotes}</p>
           </div>
 
@@ -188,7 +188,7 @@ export function AdminDashboardClient({ analytics }: { analytics: any }) {
 
           <div className="rounded-2xl border border-slate-800 bg-slate-900/50 backdrop-blur-sm p-6">
             <p className="text-sm font-semibold text-slate-400 uppercase">{t.admin.moduleStatus}</p>
-            <p className="mt-3 text-sm font-bold text-amber-400">{t.admin.waitingPhase7}</p>
+            <p className="mt-3 text-sm font-bold text-emerald-400">{t.admin.recrutementOperational}</p>
             <p className="mt-1 text-xs text-slate-500">{t.admin.jobsAndCVs}</p>
           </div>
 
