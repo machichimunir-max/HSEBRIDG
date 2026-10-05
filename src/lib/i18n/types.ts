@@ -240,6 +240,7 @@ export interface Translations {
     nextLesson: string;
     previousLesson: string;
     progressLabel: string;
+    progress: string;
     lessonsCompleted: string;
     learningTitle: string;
     programTitle: string;
@@ -290,6 +291,18 @@ export interface Translations {
     actionsColumn: string;
     viewStudent: string;
     searchPlaceholder: string;
+    unnamed: string;
+    studentName: string;
+    studentEmail: string;
+    enrolledCourses: string;
+    studentJoined: string;
+    viewDetails: string;
+    paginationShowing: string;
+    paginationTo: string;
+    paginationOf: string;
+    paginationStudents: string;
+    paginationPrevious: string;
+    paginationNext: string;
     allCourses: string;
     previousPage: string;
     nextPage: string;

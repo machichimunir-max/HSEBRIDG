@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { formatDate } from "@/lib/date-utils";
+import { useI18n } from "@/lib/i18n/I18nContext";
 
 type Student = {
   id: string;
@@ -22,6 +23,7 @@ interface StudentsTableClientProps {
 }
 
 export function StudentsTableClient({ students }: StudentsTableClientProps) {
+  const { t, isRtl } = useI18n();
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -42,12 +44,12 @@ export function StudentsTableClient({ students }: StudentsTableClientProps) {
   const paginatedStudents = filteredStudents.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <>
+    <div dir={isRtl ? "rtl" : "ltr"}>
       {/* Search */}
       <div className="mb-6">
         <div className="relative">
           <svg
-            className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
+            className={`absolute top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400 ${isRtl ? 'right-3' : 'left-3'}`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -61,7 +63,7 @@ export function StudentsTableClient({ students }: StudentsTableClientProps) {
           </svg>
           <input
             type="search"
-            placeholder="Search students by name or email..."
+            placeholder={t.admin.searchPlaceholder}
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -78,10 +80,10 @@ export function StudentsTableClient({ students }: StudentsTableClientProps) {
           <div className="mx-auto max-w-sm">
             <div className="mb-4 text-4xl">👥</div>
             <h3 className="text-lg font-semibold text-white">
-              {search ? "No students found" : "No students yet"}
+              {search ? t.admin.noStudents : t.admin.noStudents}
             </h3>
             <p className="mt-2 text-sm text-slate-400">
-              {search ? "Try a different search term" : "Students will appear here once they register"}
+              {search ? t.admin.searchPlaceholder : t.admin.noStudents}
             </p>
           </div>
         </div>
@@ -89,26 +91,26 @@ export function StudentsTableClient({ students }: StudentsTableClientProps) {
         <>
           <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50">
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full text-start">
                 <thead className="border-b border-slate-800 bg-slate-950/50">
                   <tr>
-                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
-                      Name
+                    <th className="px-6 py-4 text-sm font-medium text-slate-300">
+                      {t.admin.studentName}
                     </th>
-                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
-                      Email
+                    <th className="px-6 py-4 text-sm font-medium text-slate-300">
+                      {t.admin.studentEmail}
                     </th>
-                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
-                      Enrolled Courses
+                    <th className="px-6 py-4 text-sm font-medium text-slate-300">
+                      {t.admin.enrolledCourses}
                     </th>
-                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
-                      Progress
+                    <th className="px-6 py-4 text-sm font-medium text-slate-300">
+                      {t.student.progress}
                     </th>
-                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
-                      Joined
+                    <th className="px-6 py-4 text-sm font-medium text-slate-300">
+                      {t.admin.studentJoined}
                     </th>
-                    <th className="px-6 py-4 text-end text-sm font-medium text-slate-300">
-                      Actions
+                    <th className={`px-6 py-4 text-sm font-medium text-slate-300 ${isRtl ? 'text-start' : 'text-end'}`}>
+                      {t.admin.actionsColumn}
                     </th>
                   </tr>
                 </thead>
@@ -138,7 +140,7 @@ export function StudentsTableClient({ students }: StudentsTableClientProps) {
                             </div>
                             <div>
                               <p className="font-medium text-white">
-                                {student.name || "Unnamed"}
+                                {student.name || t.admin.unnamed}
                               </p>
                             </div>
                           </div>
@@ -165,14 +167,14 @@ export function StudentsTableClient({ students }: StudentsTableClientProps) {
                         <td className="px-6 py-4 text-sm text-slate-400">
                           {formatDate(student.createdAt)}
                         </td>
-                        <td className="px-6 py-4 text-end">
+                        <td className={`px-6 py-4 ${isRtl ? 'text-start' : 'text-end'}`}>
                           <Link
                             href={`/admin/students/${student.id}`}
                             className="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm text-slate-300 transition-colors hover:bg-slate-800"
                           >
-                            View details
+                            {t.admin.viewDetails}
                             <svg
-                              className="h-4 w-4"
+                              className={`h-4 w-4 ${isRtl ? 'rotate-180' : ''}`}
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -198,8 +200,8 @@ export function StudentsTableClient({ students }: StudentsTableClientProps) {
           {totalPages > 1 && (
             <div className="mt-6 flex items-center justify-between">
               <p className="text-sm text-slate-400">
-                Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredStudents.length)} of{" "}
-                {filteredStudents.length} students
+                {t.admin.paginationShowing} {startIndex + 1} {t.admin.paginationTo} {Math.min(startIndex + itemsPerPage, filteredStudents.length)} {t.admin.paginationOf}{" "}
+                {filteredStudents.length} {t.admin.paginationStudents}
               </p>
 
               <div className="flex gap-2">
@@ -208,7 +210,7 @@ export function StudentsTableClient({ students }: StudentsTableClientProps) {
                   disabled={currentPage === 1}
                   className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 transition-colors hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent"
                 >
-                  Previous
+                  {t.admin.paginationPrevious}
                 </button>
                 <div className="flex gap-1">
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -230,13 +232,13 @@ export function StudentsTableClient({ students }: StudentsTableClientProps) {
                   disabled={currentPage === totalPages}
                   className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 transition-colors hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent"
                 >
-                  Next
+                  {t.admin.paginationNext}
                 </button>
               </div>
             </div>
           )}
         </>
       )}
-    </>
+    </div>
   );
 }
