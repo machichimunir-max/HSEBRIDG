@@ -57,16 +57,17 @@
 **Description**: Added validation translation keys and updated CourseWizard navigation. Foundation for wizard i18n complete; comprehensive form label translation deferred to allow progress on RTL implementation and other features.
 
 ### 4. i18n chunk D: Full RTL in admin
-**Status**: partial (AdminTopBar and tables RTL-ready, remaining components to convert)
+**Status**: partial (AdminTopBar and all tables RTL-ready, dialogs and wizard remain)
 **Started**: 2026-10-05
 **Files changed**: 
-- `src/components/admin/AdminTopBar.tsx` (mobile padding now uses logical `ps-16 lg:ps-6`, search icon conditional positioning, dropdown menu conditional positioning)
-- `src/components/admin/AdminSidebar.tsx` (RTL sidebar positioning, border, chevron rotation, submenu borders - completed in b40f300)
-- `src/components/admin/StudentsTableClient.tsx` (RTL search icon, table text-start, action column alignment, arrow rotation)
-- `src/components/admin/CoursesTableClient.tsx` (RTL search icon, action column alignment, status badge positioning)
-**Tests**: `npm run build` (success)
-**Issues**: Remaining files need RTL conversion: EnrollmentsTableClient, ManualEnrollDialog, CourseWizard, and admin layout pages. Table action buttons, modals, and wizard stepper need RTL verification.
-**Description**: Core admin navigation and tables now support RTL with logical properties. Search icons, action columns, badges, and navigation elements position correctly in Arabic. Remaining admin components to be converted in next pass.
+- `src/components/admin/AdminTopBar.tsx` (mobile padding logical `ps-16 lg:ps-6`, search icon conditional, dropdown menu conditional)
+- `src/components/admin/AdminSidebar.tsx` (RTL sidebar positioning, border, chevron rotation, submenu borders - b40f300)
+- `src/components/admin/StudentsTableClient.tsx` (RTL: search icon, table text-start, action column, arrow, pagination i18n)
+- `src/components/admin/EnrollmentsTableClient.tsx` (RTL: search icon, table text-start, action column justify, pagination i18n)
+- `src/components/admin/CoursesTableClient.tsx` (RTL: search icon, action column alignment, status badge positioning)
+**Tests**: `npm run build` (success after each commit)
+**Issues**: Remaining: ManualEnrollDialog, CourseWizard stepper, admin dashboard cards need RTL verification.
+**Description**: All admin tables now RTL-complete with conditional search icons, action column alignment, and translated pagination. Core navigation and data tables work correctly in Arabic layout.
 
 ### 5. PHASE 6: Boutique EPI/EPC
 **Status**: todo

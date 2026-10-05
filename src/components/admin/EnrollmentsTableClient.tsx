@@ -171,7 +171,7 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
                       <td className="px-6 py-4">
                         <div>
                           <p className="font-medium text-white">
-                            {enrollment.user.name || "Unnamed"}
+                            {enrollment.user.name || t.admin.unnamed}
                           </p>
                           <p className="text-xs text-slate-400">
                             {enrollment.user.email}
@@ -209,14 +209,14 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
                           {t.admin.enrollmentActive}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-end">
+                      <td className={`px-6 py-4 ${isRtl ? 'text-start' : 'text-end'}`}>
                         <Link
                           href={`/admin/students/${enrollment.user.id}`}
                           className="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm text-slate-300 transition-colors hover:bg-slate-800"
                         >
                           {t.admin.viewStudent}
                           <svg
-                            className="h-4 w-4"
+                            className={`h-4 w-4 ${isRtl ? 'rotate-180' : ''}`}
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -283,7 +283,7 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
         </>
       )}
 
-      {/* Manual Enroll Dialog */}
+      {/* Manual enroll dialog */}
       {showEnrollDialog && (
         <ManualEnrollDialog
           courses={courses}
@@ -291,6 +291,6 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
           onSuccess={handleEnrollSuccess}
         />
       )}
-    </>
+    </div>
   );
 }
