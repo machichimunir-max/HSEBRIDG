@@ -273,3 +273,105 @@ model QuoteRequestItem {
   @@index([quoteRequestId])
   @@index([productId])
 }
+
+// RECRUTEMENT HSE MODELS
+
+enum ContractType {
+  INTERIM
+  CDD
+  CDI
+}
+
+enum JobScope {
+  NATIONAL
+  INTERNATIONAL
+}
+
+enum ApplicationStatus {
+  NEW
+  SHORTLISTED
+  INTERVIEW
+  PLACED
+  REJECTED
+}
+
+model JobPosting {
+  id                    String                 @id @default(cuid())
+  titleFr               String
+  titleAr               String
+  domain                String
+  contractType          ContractType
+  scope                 JobScope
+  location              String?
+  descriptionFr         String?
+  descriptionAr         String?
+  requirementsFr        String?
+  requirementsAr        String?
+  isActive              Boolean                @default(true)
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  applications          Application[]
+
+  @@index([isActive, createdAt])
+  @@index([domain, contractType])
+}
+
+model CandidateProfile {
+  id                    String                 @id @default(cuid())
+  userId                String?
+  fullName              String
+  email                 String
+  phone                 String
+  domain                String
+  experience            String?
+  certifications        String[]               @default([])
+  languages             String[]               @default([])
+  availability          String?
+  cvUrl                 String?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  applications          Application[]
+
+  @@index([email])
+  @@index([domain])
+}
+
+model Application {
+  id                    String                 @id @default(cuid())
+  jobPostingId          String
+  candidateProfileId    String
+  status                ApplicationStatus      @default(NEW)
+  coverLetter           String?
+  adminNotes            String?
+  appliedAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  jobPosting            JobPosting             @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+  candidateProfile      CandidateProfile       @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+
+  @@index([status, appliedAt])
+  @@index([jobPostingId])
+  @@index([candidateProfileId])
+}
+
+model EmployerRequest {
+  id                    String                 @id @default(cuid())
+  companyName           String
+  contactName           String
+  email                 String
+  phone                 String
+  domain                String
+  contractType          ContractType
+  location              String?
+  scope                 JobScope
+  needs                 String
+  status                String                 @default("NEW")
+  adminNotes            String?
+  submittedAt           DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  @@index([status, submittedAt])
+  @@index([domain])
+}

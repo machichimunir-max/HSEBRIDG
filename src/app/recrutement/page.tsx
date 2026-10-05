@@ -40,14 +40,52 @@ export default function RecrutementPage() {
   });
   const [employerSubmitted, setEmployerSubmitted] = useState(false);
 
-  const handleCandidateSubmit = (e: React.FormEvent) => {
+  const handleCandidateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setCandidateSubmitted(true);
+    try {
+      const response = await fetch("/api/recrutement/candidates", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...candidateForm,
+          city: candidateForm.city,
+          domain: candidateForm.domain,
+          experience: candidateForm.experience,
+          linkedin: candidateForm.linkedin,
+          notes: candidateForm.notes,
+        }),
+      });
+      if (!response.ok) throw new Error("Failed to submit");
+      setCandidateSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting candidate:", error);
+      alert("Une erreur s'est produite. Veuillez réessayer.");
+    }
   };
 
-  const handleEmployerSubmit = (e: React.FormEvent) => {
+  const handleEmployerSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setEmployerSubmitted(true);
+    try {
+      const response = await fetch("/api/recrutement/employer-requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          company: employerForm.company,
+          contactName: employerForm.contactName,
+          email: employerForm.email,
+          phone: employerForm.phone,
+          positionNeeded: employerForm.positionNeeded,
+          location: employerForm.location,
+          contractType: employerForm.contractType,
+          description: employerForm.description,
+        }),
+      });
+      if (!response.ok) throw new Error("Failed to submit");
+      setEmployerSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting employer request:", error);
+      alert("Une erreur s'est produite. Veuillez réessayer.");
+    }
   };
 
   return (

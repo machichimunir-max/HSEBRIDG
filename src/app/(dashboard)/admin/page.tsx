@@ -38,16 +38,21 @@ async function getMultiPillarAnalytics() {
     },
   });
 
-  // PILLAR 2 — BOUTIQUE EPI/EPC (placeholder counts until schema exists)
-  const totalQuoteRequests = 0; // Will count from QuoteRequest model in phase 6
-  const pendingQuotes = 0;
-  const totalProducts = 0;
+  // PILLAR 2 — BOUTIQUE EPI/EPC
+  const [totalQuoteRequests, pendingQuotes, totalProducts, totalCategories] = await Promise.all([
+    prisma.quoteRequest.count(),
+    prisma.quoteRequest.count({ where: { status: "NEW" } }),
+    prisma.product.count(),
+    prisma.productCategory.count({ where: { isVisible: true } }),
+  ]);
 
-  // PILLAR 3 — RECRUTEMENT HSE (placeholder counts until schema exists)
-  const totalJobPostings = 0; // Will count from JobPosting model in phase 7
-  const activeJobs = 0;
-  const totalApplications = 0;
-  const newApplications = 0;
+  // PILLAR 3 — RECRUTEMENT HSE
+  const [totalJobPostings, activeJobs, totalApplications, newApplications] = await Promise.all([
+    prisma.jobPosting.count(),
+    prisma.jobPosting.count({ where: { isActive: true } }),
+    prisma.application.count(),
+    prisma.application.count({ where: { status: "NEW" } }),
+  ]);
 
   return {
     formation: {
