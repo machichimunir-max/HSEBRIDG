@@ -57,12 +57,16 @@
 **Description**: Added validation translation keys and updated CourseWizard navigation. Foundation for wizard i18n complete; comprehensive form label translation deferred to allow progress on RTL implementation and other features.
 
 ### 4. i18n chunk D: Full RTL in admin
-**Status**: partial (initial RTL logical-property pass started)
+**Status**: partial (AdminTopBar and tables RTL-ready, remaining components to convert)
 **Started**: 2026-10-05
-**Files changed**: `src/components/admin/AdminTopBar.tsx` (search input now uses `ps-10 pe-4`; profile text uses `text-start`), alongside the initial shared/admin RTL updates in commit `b40f300`.
-**Tests**: Not run for this documentation update; the latest RTL UI changes still need focused verification.
-**Issues**: `AdminTopBar.tsx` still uses physical left/right positioning for the mobile header offset, search icon, and dropdown menu. Convert those to logical positioning and verify both LTR and RTL layouts before marking the RTL pass complete.
-**Description**: Initial pass applies logical inline padding to the search input and start alignment to profile text. RTL support in the admin area remains in progress.
+**Files changed**: 
+- `src/components/admin/AdminTopBar.tsx` (mobile padding now uses logical `ps-16 lg:ps-6`, search icon conditional positioning, dropdown menu conditional positioning)
+- `src/components/admin/AdminSidebar.tsx` (RTL sidebar positioning, border, chevron rotation, submenu borders - completed in b40f300)
+- `src/components/admin/StudentsTableClient.tsx` (RTL search icon, table text-start, action column alignment, arrow rotation)
+- `src/components/admin/CoursesTableClient.tsx` (RTL search icon, action column alignment, status badge positioning)
+**Tests**: `npm run build` (success)
+**Issues**: Remaining files need RTL conversion: EnrollmentsTableClient, ManualEnrollDialog, CourseWizard, and admin layout pages. Table action buttons, modals, and wizard stepper need RTL verification.
+**Description**: Core admin navigation and tables now support RTL with logical properties. Search icons, action columns, badges, and navigation elements position correctly in Arabic. Remaining admin components to be converted in next pass.
 
 ### 5. PHASE 6: Boutique EPI/EPC
 **Status**: todo

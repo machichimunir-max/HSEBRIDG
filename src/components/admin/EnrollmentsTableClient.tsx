@@ -33,7 +33,7 @@ interface EnrollmentsTableClientProps {
 }
 
 export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTableClientProps) {
-  const { t } = useI18n();
+  const { t, isRtl } = useI18n();
   const [search, setSearch] = useState("");
   const [courseFilter, setCourseFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,13 +68,13 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
   };
 
   return (
-    <>
+    <div dir={isRtl ? "rtl" : "ltr"}>
       {/* Header with Add Button */}
       <div className="mb-6 flex items-center justify-between">
         <div className="flex flex-1 flex-col gap-3 sm:flex-row">
           <div className="relative flex-1">
             <svg
-              className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
+              className={`absolute top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400 ${isRtl ? 'right-3' : 'left-3'}`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -142,22 +142,22 @@ export function EnrollmentsTableClient({ enrollments, courses }: EnrollmentsTabl
         <>
           <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50">
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full text-start">
                 <thead className="border-b border-slate-800 bg-slate-950/50">
                   <tr>
-                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
+                    <th className="px-6 py-4 text-sm font-medium text-slate-300">
                       {t.admin.enrollmentStudentEmail}
                     </th>
-                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
+                    <th className="px-6 py-4 text-sm font-medium text-slate-300">
                       {t.admin.enrollmentCourse}
                     </th>
-                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
+                    <th className="px-6 py-4 text-sm font-medium text-slate-300">
                       {t.admin.enrollmentsTitle}
                     </th>
-                    <th className="px-6 py-4 text-start text-sm font-medium text-slate-300">
+                    <th className="px-6 py-4 text-sm font-medium text-slate-300">
                       Status
                     </th>
-                    <th className="px-6 py-4 text-end text-sm font-medium text-slate-300">
+                    <th className={`px-6 py-4 text-sm font-medium text-slate-300 ${isRtl ? 'text-start' : 'text-end'}`}>
                       {t.admin.actionsColumn}
                     </th>
                   </tr>
