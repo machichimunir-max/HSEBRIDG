@@ -161,10 +161,10 @@ Previous session marked tasks as "done" when only models/placeholders existed. R
 
 ### FIX CHUNK A — Bugs & placeholders
 **Status**: done
-**Completed**: 2026-10-05
+**Completed**: 2026-10-06
 **Files changed**:
 - `src/components/admin/CoursesTableClient.tsx` (fixed crash: `course.enrollments.length` → `course._count.enrollments`, replaced emoji icons with SVG)
-- `src/lib/i18n/locales/fr.ts` (removed `availablePhase6`, `waitingPhase6`, `waitingPhase7`; added `boutiqueOperational`, `recrutementOperational`)
+- `src/lib/i18n/locales/fr.ts` (removed `availablePhase6`, `waitingPhase6`, `waitingPhase7`; added `boutiqueOperational`, `recrutementOperational`, settings keys)
 - `src/lib/i18n/locales/ar.ts` (same keys, Arabic translations)
 - `src/lib/i18n/types.ts` (updated type definitions)
 - `src/app/(dashboard)/admin/AdminDashboardClient.tsx` (replaced Phase 6/7 placeholders with "Opérationnel", fixed hardcoded "Étudiant" → i18n)
@@ -174,14 +174,29 @@ Previous session marked tasks as "done" when only models/placeholders existed. R
 - `src/app/(dashboard)/admin/recrutement/candidates/page.tsx` (replaced emoji icons with SVG)
 - `src/app/(dashboard)/admin/recrutement/employer-requests/page.tsx` (replaced emoji icons with SVG)
 - `src/app/(dashboard)/admin/recrutement/applications/ApplicationsClient.tsx` (replaced emoji icons with SVG)
+- `prisma/schema.prisma` (added SiteSetting model)
+- `src/lib/settings-server.ts` (new settings server actions)
+- `src/app/api/admin/settings/route.ts` (new settings API route)
+- `src/components/public/SettingsProvider.tsx` (new settings context provider)
+- `src/components/public/PublicHeader.tsx` (updated to use settings from DB)
+- `src/components/public/PublicFooter.tsx` (updated to use settings from DB)
+- `src/components/public/WhatsAppButton.tsx` (updated to use settings from DB)
+- `src/app/contact/page.tsx` (updated to use settings from DB)
+- `src/app/layout.tsx` (wrapped with SettingsProvider)
+- `src/components/icons/HseIcons.tsx` (added AlertCircleIcon, CheckCircleIcon, LoaderIcon)
 **Tests**: 
-- `npx tsx scripts/check-translation-keys.ts` (323 keys FR/AR, all in sync)
-- `npm run build` (success, 41 routes generated)
-**Issues**: None. All emoji icons replaced with SVG outline icons. The "1 Issue" dev overlay was caused by the crash, now fixed.
-**Description**: Fixed the critical crash at CoursesTableClient.tsx line 253 (root cause: API returns `_count.enrollments` but component expected `enrollments.length`). Removed all Phase 6/7/coming soon placeholders from dashboard and users page. Replaced all emoji icons with proper SVG outline icons across admin recrutement pages. Settings page now uses proper structure with SVG icon (full SiteSetting CRUD deferred to Chunk B as it requires Prisma model + UI).
+- `npx tsx scripts/check-translation-keys.ts` (338 keys FR/AR, all in sync)
+- `npm run build` (success, 42 routes generated)
+**Issues**: None. All emoji icons replaced with SVG outline icons. The "1 Issue" dev overlay was caused by the crash, now fixed. Settings page fully functional with SiteSetting model.
+**Description**: Fixed the critical crash at CoursesTableClient.tsx line 253 (root cause: API returns `_count.enrollments` but component expected `enrollments.length`). Removed all Phase 6/7/coming soon placeholders from dashboard and users page. Replaced all emoji icons with proper SVG outline icons across admin recrutement pages. Implemented full /admin/settings with SiteSetting Prisma model (site name, contact email, phone, WhatsApp number, address, Instagram, LinkedIn). Public header, footer, floating WhatsApp button, and contact page now read these values from the database. FR/AR labels with RTL support.
 
 ### FIX CHUNK B — Boutique: products (main gap)
-**Status**: todo
+**Status**: in progress
+**Started**: 2026-10-06
+**Files changed**:
+- `src/lib/i18n/types.ts` (added 34 product management i18n keys)
+- `src/lib/i18n/locales/fr.ts` (added 34 French product management keys)
+- `src/lib/i18n/locales/ar.ts` (added 34 Arabic product management keys)
 **Target**: Full product CRUD admin, public product pages, quote basket, Playwright tests
 
 ### FIX CHUNK C — Recrutement: complete admin + verify public
