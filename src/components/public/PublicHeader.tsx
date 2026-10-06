@@ -6,9 +6,11 @@ import { useI18n } from "@/lib/i18n/I18nContext";
 import { Logo } from "@/components/brand/Logo";
 import { LanguageSwitcher } from "@/components/brand/LanguageSwitcher";
 import { useState, useEffect } from "react";
+import { useSettings } from "@/components/public/SettingsProvider";
 
 export function PublicHeader() {
   const { t, isRtl } = useI18n();
+  const { settings } = useSettings();
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

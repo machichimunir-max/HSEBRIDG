@@ -7,9 +7,11 @@ import { PublicHeader } from "@/components/public/PublicHeader";
 import { PublicFooter } from "@/components/public/PublicFooter";
 import { WhatsAppButton } from "@/components/public/WhatsAppButton";
 import { SafetyShieldIcon } from "@/components/icons/HseIcons";
+import { useSettings } from "@/components/public/SettingsProvider";
 
 export default function ContactPage() {
   const { t, isRtl } = useI18n();
+  const { settings } = useSettings();
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -24,6 +26,11 @@ export default function ContactPage() {
     e.preventDefault();
     setSubmitted(true);
   };
+
+  const phone = settings?.contactPhone || "+212 6 00 00 00 00";
+  const email = settings?.contactEmail || "contact@hsebridge.ma";
+  const address = settings?.address || "Casablanca, Maroc";
+  const whatsappNumber = settings?.whatsappNumber || "212600000000";
 
   return (
     <div className="min-h-screen bg-[#FFFFFF] text-[#0A0A0A] flex flex-col justify-between">
@@ -210,7 +217,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="font-bold text-slate-900">Téléphone Direct</p>
-                      <p className="text-slate-600">{t.footer.phone}</p>
+                      <p className="text-slate-600">{phone}</p>
                     </div>
                   </div>
 
@@ -222,7 +229,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="font-bold text-slate-900">Courrier Électronique</p>
-                      <p className="text-slate-600">{t.footer.email}</p>
+                      <p className="text-slate-600">{email}</p>
                     </div>
                   </div>
 
@@ -235,7 +242,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="font-bold text-slate-900">Siège & Couverture</p>
-                      <p className="text-slate-600">{t.footer.location}</p>
+                      <p className="text-slate-600">{address}</p>
                       <p className="text-slate-400 text-[11px]">Interventions & livraisons sur tout le Royaume</p>
                     </div>
                   </div>

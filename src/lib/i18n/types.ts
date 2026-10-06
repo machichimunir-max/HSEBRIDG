@@ -377,6 +377,23 @@ export interface Translations {
     jobsAndCVs: string;
     manageJobs: string;
     viewApplications: string;
+
+    // Settings
+    settingsPageTitle: string;
+    settingsPageDesc: string;
+    settingsSiteName: string;
+    settingsContactEmail: string;
+    settingsContactPhone: string;
+    settingsWhatsappNumber: string;
+    settingsAddress: string;
+    settingsInstagramUrl: string;
+    settingsLinkedinUrl: string;
+    settingsSaveSuccess: string;
+    settingsSaveError: string;
+    settingsGeneralSection: string;
+    settingsContactSection: string;
+    settingsSocialSection: string;
+    lastUpdated: string;
   };
   catalog: {
     title: string;

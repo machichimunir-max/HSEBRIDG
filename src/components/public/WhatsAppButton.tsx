@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/lib/i18n/I18nContext";
+import { useSettings } from "@/components/public/SettingsProvider";
 
 interface WhatsAppButtonProps {
   text?: string;
@@ -16,7 +17,8 @@ export function WhatsAppButton({
   variant = "primary",
 }: WhatsAppButtonProps) {
   const { t } = useI18n();
-  const phone = "212600000000"; // HSE BRIDGE contact number
+  const { settings } = useSettings();
+  const phone = settings?.whatsappNumber || "212600000000";
   const encodedMessage = encodeURIComponent(message);
   const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
 

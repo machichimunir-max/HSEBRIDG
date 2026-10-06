@@ -380,6 +380,20 @@ model EmployerRequest {
   @@index([domain])
 }
 
+// SITE SETTINGS MODEL
+
+model SiteSetting {
+  id                    String                 @id @default(cuid())
+  siteName              String                 @default("HSE BRIDGE")
+  contactEmail          String?
+  contactPhone          String?
+  whatsappNumber        String?
+  address               String?
+  instagramUrl          String?
+  linkedinUrl           String?
+  updatedAt             DateTime               @updatedAt
+}
+
 // QUIZ & ATTESTATION MODELS
 
 model Quiz {

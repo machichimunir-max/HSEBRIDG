@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n/I18nContext";
+import { SettingsProvider } from "@/components/public/SettingsProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -78,7 +79,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html lang={locale} dir={dir} className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`} data-scroll-behavior="smooth">
       <body className="min-h-full bg-slate-950 text-slate-50">
         <I18nProvider>
-          {children}
+          <SettingsProvider>
+            {children}
+          </SettingsProvider>
         </I18nProvider>
       </body>
     </html>
