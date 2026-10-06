@@ -509,6 +509,18 @@ export const ar: Translations = {
     manageCategories: "إدارة الأصناف",
     manageProducts: "إدارة المنتجات",
 
+    // Recruitment
+    pillarRecrutement: "التوظيف — الوظائف والمرشحين",
+    pillarRecrutementDesc: "عروض العمل، المرشحون، طلبات أصحاب العمل",
+    publishedJobs: "الوظائف المنشورة",
+    activeJobs: "نشطة",
+    applications: "الطلبات",
+    newApplications: "جديدة",
+    recrutementOperational: "قيد التشغيل",
+    jobsAndCVs: "الوظائف + السير الذاتية",
+    manageJobs: "إدارة الوظائف",
+    viewApplications: "عرض الطلبات",
+
     productsTitle: "كتالوج منتجات EPI / EPC",
     productsDesc: "إدارة كاملة لكتالوج المنتجات مع الصور والمخزون والشهادات",
     newProduct: "منتج جديد",

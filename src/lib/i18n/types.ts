@@ -368,6 +368,18 @@ export interface Translations {
     manageCategories: string;
     manageProducts: string;
 
+    // Recruitment
+    pillarRecrutement: string;
+    pillarRecrutementDesc: string;
+    publishedJobs: string;
+    activeJobs: string;
+    applications: string;
+    newApplications: string;
+    recrutementOperational: string;
+    jobsAndCVs: string;
+    manageJobs: string;
+    viewApplications: string;
+
     // Product management
     productsTitle: string;
     productsDesc: string;
@@ -423,34 +435,6 @@ export interface Translations {
     productSaved: string;
     productDeleted: string;
     productSaveError: string;
-  };
-  catalog: {
-    pillarRecrutementDesc: string;
-    publishedJobs: string;
-    activeJobs: string;
-    applications: string;
-    newApplications: string;
-    recrutementOperational: string;
-    jobsAndCVs: string;
-    manageJobs: string;
-    viewApplications: string;
-
-    // Settings
-    settingsPageTitle: string;
-    settingsPageDesc: string;
-    settingsSiteName: string;
-    settingsContactEmail: string;
-    settingsContactPhone: string;
-    settingsWhatsappNumber: string;
-    settingsAddress: string;
-    settingsInstagramUrl: string;
-    settingsLinkedinUrl: string;
-    settingsSaveSuccess: string;
-    settingsSaveError: string;
-    settingsGeneralSection: string;
-    settingsContactSection: string;
-    settingsSocialSection: string;
-    lastUpdated: string;
   };
   catalog: {
     title: string;

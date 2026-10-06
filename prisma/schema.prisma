@@ -219,6 +219,7 @@ model ProductCategory {
 model Product {
   id                    String                 @id @default(cuid())
   categoryId            String
+  slug                  String                 @unique
   sku                   String?                @unique
   titleFr               String
   titleAr               String
