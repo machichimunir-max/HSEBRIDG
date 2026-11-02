@@ -8,7 +8,13 @@ async function getCandidates() {
       _count: { select: { applications: true } },
     },
   });
-  return candidates;
+
+  // Serialize dates for client rendering
+  return candidates.map((c) => ({
+    ...c,
+    createdAt: c.createdAt.toISOString(),
+    updatedAt: c.updatedAt.toISOString(),
+  }));
 }
 
 export default async function AdminCandidatesPage() {

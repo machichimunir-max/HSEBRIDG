@@ -10,7 +10,23 @@ async function getApplications() {
       candidateProfile: true,
     },
   });
-  return applications;
+
+  // Serialize dates for client component
+  return applications.map((app) => ({
+    ...app,
+    appliedAt: app.appliedAt.toISOString(),
+    updatedAt: app.updatedAt.toISOString(),
+    jobPosting: {
+      ...app.jobPosting,
+      createdAt: app.jobPosting.createdAt.toISOString(),
+      updatedAt: app.jobPosting.updatedAt.toISOString(),
+    },
+    candidateProfile: {
+      ...app.candidateProfile,
+      createdAt: app.candidateProfile.createdAt.toISOString(),
+      updatedAt: app.candidateProfile.updatedAt.toISOString(),
+    },
+  }));
 }
 
 export default async function AdminApplicationsPage() {

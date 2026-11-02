@@ -162,7 +162,7 @@ export function AdminDashboardClient({ analytics }: { analytics: any }) {
       </section>
 
       {/* PILLAR 3: RECRUTEMENT HSE */}
-      <section>
+      <section data-testid="recrutement-dashboard-section">
         <div className="mb-4 flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#073022] text-[#FDCD1A]">
             <RecrutementIcon className="w-6 h-6" />

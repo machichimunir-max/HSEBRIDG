@@ -24,6 +24,8 @@ export default function RecrutementPage() {
     linkedin: "",
     notes: "",
   });
+  const [cvFile, setCvFile] = useState<File | null>(null);
+  const [isUploadingCV, setIsUploadingCV] = useState(false);
   const [candidateSubmitted, setCandidateSubmitted] = useState(false);
 
   // Employer Form State
@@ -42,12 +44,37 @@ export default function RecrutementPage() {
 
   const handleCandidateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsUploadingCV(true);
+
     try {
+      let cvUrl = null;
+
+      // Upload CV if provided
+      if (cvFile) {
+        const cvFormData = new FormData();
+        cvFormData.append("cv", cvFile);
+
+        const uploadResponse = await fetch("/api/recrutement/candidates/upload-cv", {
+          method: "POST",
+          body: cvFormData,
+        });
+
+        if (!uploadResponse.ok) {
+          const error = await uploadResponse.json();
+          throw new Error(error.error || "Failed to upload CV");
+        }
+
+        const uploadData = await uploadResponse.json();
+        cvUrl = uploadData.cvUrl;
+      }
+
+      // Submit candidate profile
       const response = await fetch("/api/recrutement/candidates", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...candidateForm,
+          cvUrl,
           city: candidateForm.city,
           domain: candidateForm.domain,
           experience: candidateForm.experience,
@@ -59,7 +86,9 @@ export default function RecrutementPage() {
       setCandidateSubmitted(true);
     } catch (error) {
       console.error("Error submitting candidate:", error);
-      alert("Une erreur s'est produite. Veuillez réessayer.");
+      alert(error instanceof Error ? error.message : "Une erreur s'est produite. Veuillez réessayer.");
+    } finally {
+      setIsUploadingCV(false);
     }
   };
 
@@ -397,6 +426,46 @@ export default function RecrutementPage() {
 
                     <div className="sm:col-span-2">
                       <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                        CV / Curriculum Vitae (PDF, max 5 MB)
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="file"
+                          accept=".pdf,application/pdf"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              if (file.size > 5 * 1024 * 1024) {
+                                alert("Le fichier est trop volumineux. Taille maximale : 5 MB.");
+                                e.target.value = "";
+                                return;
+                              }
+                              if (file.type !== "application/pdf") {
+                                alert("Seuls les fichiers PDF sont acceptés.");
+                                e.target.value = "";
+                                return;
+                              }
+                              setCvFile(file);
+                            }
+                          }}
+                          className="w-full rounded-xl border border-slate-300 p-3 text-sm focus:border-[#073022] focus:ring-1 focus:ring-[#073022] outline-none bg-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-[#073022] file:text-white hover:file:bg-[#0a4030] file:cursor-pointer"
+                        />
+                        {cvFile && (
+                          <p className="mt-2 text-xs text-emerald-700 flex items-center gap-1">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            {cvFile.name} ({(cvFile.size / 1024 / 1024).toFixed(2)} MB)
+                          </p>
+                        )}
+                      </div>
+                      <p className="mt-1 text-xs text-slate-500">
+                        📄 Joindre votre CV au format PDF pour une évaluation complète de votre profil.
+                      </p>
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
                         Formations & Certifications clés détenues
                       </label>
                       <textarea
@@ -411,9 +480,10 @@ export default function RecrutementPage() {
                     <div className="sm:col-span-2 mt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                       <button
                         type="submit"
-                        className="w-full sm:w-auto rounded-full bg-[#073022] px-8 py-3.5 text-sm font-bold text-white shadow-md hover:bg-[#0a4030] transition-all transform hover:-translate-y-0.5"
+                        disabled={isUploadingCV}
+                        className="w-full sm:w-auto rounded-full bg-[#073022] px-8 py-3.5 text-sm font-bold text-white shadow-md hover:bg-[#0a4030] transition-all transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {t.pillars.recrutement.forCandidates.buttonText}
+                        {isUploadingCV ? "Envoi en cours..." : t.pillars.recrutement.forCandidates.buttonText}
                       </button>
                       <span className="text-xs text-slate-500">
                         🔒 Confidentialité garantie vis-à-vis de votre employeur actuel.

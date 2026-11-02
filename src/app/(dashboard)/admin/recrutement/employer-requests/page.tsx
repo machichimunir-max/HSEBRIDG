@@ -5,7 +5,13 @@ async function getRequests() {
   const requests = await prisma.employerRequest.findMany({
     orderBy: { submittedAt: "desc" },
   });
-  return requests;
+
+  // Serialize dates for client rendering
+  return requests.map((r) => ({
+    ...r,
+    submittedAt: r.submittedAt.toISOString(),
+    updatedAt: r.updatedAt.toISOString(),
+  }));
 }
 
 export default async function AdminEmployerRequestsPage() {

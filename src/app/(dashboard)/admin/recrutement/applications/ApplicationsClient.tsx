@@ -25,7 +25,7 @@ interface Application {
   id: string;
   status: AppStatus;
   coverLetter: string | null;
-  appliedAt: Date;
+  appliedAt: string;
   candidateProfile: CandidateProfile;
   jobPosting: JobPosting;
 }
