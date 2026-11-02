@@ -14,6 +14,9 @@ export default async function LearnCoursePage({ params }: { params: Promise<{ sl
   const course = await prisma.course.findUnique({
     where: { slug },
     include: {
+      quiz: {
+        select: { id: true },
+      },
       modules: {
         orderBy: [{ order: "asc" }],
         include: {
@@ -84,6 +87,7 @@ export default async function LearnCoursePage({ params }: { params: Promise<{ sl
       modules={serializedModules}
       currentLessonId={currentLessonId}
       userProgress={userProgress}
+      hasQuiz={!!course.quiz}
     />
   );
 }

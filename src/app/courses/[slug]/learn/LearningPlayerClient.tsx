@@ -11,6 +11,7 @@ export default function LearningPlayerClient({
   modules,
   currentLessonId,
   userProgress,
+  hasQuiz,
 }: any) {
   const { t } = useI18n();
   const router = useRouter();
@@ -31,6 +32,7 @@ export default function LearningPlayerClient({
   // Calculate progress
   const completedCount = allLessons.filter((l: any) => userProgress[l.id]?.isCompleted).length;
   const progressPercent = Math.round((completedCount / allLessons.length) * 100);
+  const allLessonsCompleted = completedCount === allLessons.length;
 
   const handleMarkComplete = async () => {
     if (!currentLesson) return;
@@ -102,6 +104,25 @@ export default function LearningPlayerClient({
           <div className="h-2 rounded-full bg-slate-800">
             <div className="h-2 rounded-full bg-cyan-500" style={{ width: `${progressPercent}%` }} />
           </div>
+          {allLessonsCompleted && hasQuiz && (
+            <div className="mt-4 rounded-xl border border-[#FDCD1A]/30 bg-[#FDCD1A]/10 p-4">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="font-semibold text-white">🎓 {t.quiz.title}</p>
+                  <p className="mt-1 text-sm text-slate-300">
+                    Vous avez terminé tous les cours. Passez le quiz pour obtenir votre attestation !
+                  </p>
+                </div>
+                <Link
+                  href={`/courses/${course.slug}/quiz`}
+                  className="flex-shrink-0 rounded-lg bg-[#FDCD1A] px-6 py-3 font-medium text-slate-950 hover:bg-[#e5b917] transition-colors"
+                  data-testid="take-quiz-btn"
+                >
+                  {t.quiz.startQuiz}
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
@@ -129,6 +150,8 @@ export default function LearningPlayerClient({
                               ? "border-emerald-500/30 bg-emerald-500/5"
                               : "border-slate-800 bg-slate-900 hover:border-slate-700"
                           }`}
+                          data-testid={`lesson-${lesson.id}`}
+                          data-lesson-id={lesson.id}
                         >
                           <span className="text-sm text-slate-200 truncate">{lesson.title}</span>
                           <span className="text-xs ml-2 flex-shrink-0">

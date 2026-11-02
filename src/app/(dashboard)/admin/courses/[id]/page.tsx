@@ -171,12 +171,21 @@ export default function EditCoursePage({ params }: { params: Promise<{ id: strin
     <div className="mx-auto max-w-3xl">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white">Edit course</h1>
-          <p className="mt-1 text-sm text-slate-400">Update course information</p>
+          <h1 className="text-3xl font-bold text-white" data-testid="edit-course-title">Modifier la formation</h1>
+          <p className="mt-1 text-sm text-slate-400">Mettre à jour les informations de la formation</p>
         </div>
-        <Link href="/admin/courses" className="rounded-lg border border-slate-700 px-4 py-2 text-slate-200 hover:bg-slate-800 transition-colors">
-          Back
-        </Link>
+        <div className="flex gap-3">
+          <Link
+            href={`/admin/courses/${id}/quiz`}
+            className="rounded-lg border border-cyan-500/50 bg-cyan-500/10 px-4 py-2 text-cyan-400 hover:bg-cyan-500/20 transition-colors"
+            data-testid="manage-quiz-link"
+          >
+            📝 Manage Quiz
+          </Link>
+          <Link href="/admin/courses" className="rounded-lg border border-slate-700 px-4 py-2 text-slate-200 hover:bg-slate-800 transition-colors">
+            Back
+          </Link>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5 rounded-3xl border border-slate-800 bg-slate-900/50 backdrop-blur-sm p-6">
