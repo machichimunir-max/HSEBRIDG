@@ -12,7 +12,12 @@ async function getProducts() {
     orderBy: { order: "asc" },
   });
 
-  return products;
+  // Convert Prisma types to client-compatible types
+  return products.map(p => ({
+    ...p,
+    price: p.price ? Number(p.price) : 0,
+    specifications: (p.specifications as Record<string, string>) || {},
+  }));
 }
 
 async function getCategories() {

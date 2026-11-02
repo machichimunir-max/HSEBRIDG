@@ -11,8 +11,6 @@ interface ProductCategory {
   slug: string;
 }
 
-import { Decimal } from "@prisma/client/runtime/library";
-
 interface Product {
   id: string;
   titleFr: string;
@@ -24,7 +22,7 @@ interface Product {
   descriptionFr: string | null;
   descriptionAr: string | null;
   images: string[];
-  price: Decimal | number | null;
+  price: number | null;
   stockStatus: string;
   certifications: string[];
   specifications: Record<string, string>;
@@ -111,6 +109,13 @@ export function ProductsClient({ products: initialProducts, categories }: Produc
   // Toast state
   const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
+  // Auto-dismiss toast after 4 seconds
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(null), 4000);
+    return () => clearTimeout(timer);
+  }, [toast]);
+
   // Debounced search
   const [debouncedSearch, setDebouncedSearch] = useState("");
   useEffect(() => {
@@ -156,7 +161,17 @@ export function ProductsClient({ products: initialProducts, categories }: Produc
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSpecChange = (key: string, value: string) => {
+  const handleSpecKeyChange = (oldKey: string, newKey: string) => {
+    setFormData((prev) => {
+      const entries = Object.entries(prev.specifications);
+      const idx = entries.findIndex(([k]) => k === oldKey);
+      if (idx === -1) return prev;
+      entries[idx] = [newKey, entries[idx][1]];
+      return { ...prev, specifications: Object.fromEntries(entries) };
+    });
+  };
+
+  const handleSpecValueChange = (key: string, value: string) => {
     setFormData((prev) => ({
       ...prev,
       specifications: { ...prev.specifications, [key]: value },
@@ -168,6 +183,15 @@ export function ProductsClient({ products: initialProducts, categories }: Produc
       const { [key]: _, ...rest } = prev.specifications;
       return { ...prev, specifications: rest };
     });
+  };
+
+  const addSpec = () => {
+    // Generate a unique placeholder key
+    const newKey = `spec_${Date.now()}`;
+    setFormData((prev) => ({
+      ...prev,
+      specifications: { ...prev.specifications, [newKey]: "" },
+    }));
   };
 
   // Open create modal
@@ -609,6 +633,25 @@ export function ProductsClient({ products: initialProducts, categories }: Produc
         </>
       )}
 
+      {/* Toast */}
+      {toast && (
+        <div
+          className={`fixed bottom-6 right-6 z-[60] flex items-center gap-3 rounded-xl px-4 py-3 shadow-xl ${
+            toast.type === "success"
+              ? "bg-green-900/90 border border-green-700 text-green-300"
+              : "bg-red-900/90 border border-red-700 text-red-300"
+          } animate-in slide-in-from-bottom-4`}
+          role="alert"
+        >
+          {toast.type === "success" ? (
+            <CheckIcon className="w-5 h-5 flex-shrink-0" />
+          ) : (
+            <XIcon className="w-5 h-5 flex-shrink-0" />
+          )}
+          <span>{toast.message}</span>
+        </div>
+      )}
+
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 animate-in fade-in">
@@ -626,24 +669,6 @@ export function ProductsClient({ products: initialProducts, categories }: Produc
             </div>
 
             <form onSubmit={handleSave} className="p-6 space-y-6">
-              {toast && (
-                <div
-                  className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-xl px-4 py-3 ${
-                    toast.type === "success"
-                      ? "bg-green-900/90 border border-green-700 text-green-300"
-                      : "bg-red-900/90 border border-red-700 text-red-300"
-                  } animate-in slide-in-from-bottom-4`}
-                  role="alert"
-                >
-                  {toast.type === "success" ? (
-                    <CheckIcon className="w-5 h-5 flex-shrink-0" />
-                  ) : (
-                    <XIcon className="w-5 h-5 flex-shrink-0" />
-                  )}
-                  <span>{toast.message}</span>
-                </div>
-              )}
-
               {/* Basic Info */}
               <section>
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
@@ -824,7 +849,7 @@ export function ProductsClient({ products: initialProducts, categories }: Produc
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
-                  <div>
+                  <div className="md:col-span-2">
                     <label className="block mb-1 text-sm font-medium text-slate-300">{t.admin.productSpecifications}</label>
                     <div className="space-y-2">
                       {Object.entries(formData.specifications).map(([key, value]) => (
@@ -832,14 +857,14 @@ export function ProductsClient({ products: initialProducts, categories }: Produc
                           <input
                             type="text"
                             value={key}
-                            onChange={(e) => handleSpecChange(key, e.target.value)}
+                            onChange={(e) => handleSpecKeyChange(key, e.target.value)}
                             placeholder={t.admin.specKeyPlaceholder}
                             className="flex-1 rounded-xl border border-slate-600 px-4 py-2 bg-slate-800 text-white placeholder-slate-500 focus:border-[#FDCD1A] focus:outline-none focus:ring-1 focus:ring-[#FDCD1A]"
                           />
                           <input
                             type="text"
                             value={value}
-                            onChange={(e) => handleSpecChange(key, e.target.value)}
+                            onChange={(e) => handleSpecValueChange(key, e.target.value)}
                             placeholder={t.admin.specValuePlaceholder}
                             className="flex-1 rounded-xl border border-slate-600 px-4 py-2 bg-slate-800 text-white placeholder-slate-500 focus:border-[#FDCD1A] focus:outline-none focus:ring-1 focus:ring-[#FDCD1A]"
                           />
@@ -854,7 +879,7 @@ export function ProductsClient({ products: initialProducts, categories }: Produc
                       ))}
                       <button
                         type="button"
-                        onClick={() => handleSpecChange("", "")}
+                        onClick={addSpec}
                         className="w-full py-2 text-sm font-medium text-[#FDCD1A] hover:text-[#e5b917] transition-colors flex items-center justify-center gap-2"
                       >
                         <PlusIcon className="w-4 h-4" />

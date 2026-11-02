@@ -34,7 +34,13 @@ export async function GET(
       );
     }
 
-    return NextResponse.json(product);
+    // Convert Decimal to number for client
+    const productWithNumberPrice = {
+      ...product,
+      price: product.price ? Number(product.price) : null,
+    };
+
+    return NextResponse.json(productWithNumberPrice);
   } catch (error) {
     console.error("Failed to fetch product:", error);
     return NextResponse.json(
@@ -116,7 +122,13 @@ export async function PATCH(
       },
     });
 
-    return NextResponse.json({ success: true, product });
+    // Convert Decimal to number for client
+    const productWithNumberPrice = {
+      ...product,
+      price: product.price ? Number(product.price) : null,
+    };
+
+    return NextResponse.json({ success: true, product: productWithNumberPrice });
   } catch (error) {
     console.error("Failed to update product:", error);
     return NextResponse.json(

@@ -59,8 +59,14 @@ export async function GET(request: NextRequest) {
       prisma.product.count({ where }),
     ]);
 
+    // Convert Decimal to number for client
+    const productsWithNumberPrice = products.map(p => ({
+      ...p,
+      price: p.price ? Number(p.price) : null,
+    }));
+
     return NextResponse.json({
-      products,
+      products: productsWithNumberPrice,
       total,
       page,
       limit,
@@ -154,7 +160,13 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ success: true, product });
+    // Convert Decimal to number for client
+    const productWithNumberPrice = {
+      ...product,
+      price: product.price ? Number(product.price) : null,
+    };
+
+    return NextResponse.json({ success: true, product: productWithNumberPrice });
   } catch (error) {
     console.error("Failed to create product:", error);
     return NextResponse.json(
