@@ -52,3 +52,5 @@ playwright-report/
 playwright/.cache/
 
 /uploads/
+
+DEVELOPMENT_CREDENTIALS.md
