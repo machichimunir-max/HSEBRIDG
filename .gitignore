@@ -42,3 +42,13 @@ next-env.d.ts
 
 # Uploaded thumbnails and served uploads
 public/uploads/
+
+# CVs (secured, outside public/)
+uploads/cvs/
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+/uploads/

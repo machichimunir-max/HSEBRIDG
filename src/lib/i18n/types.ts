@@ -380,6 +380,57 @@ export interface Translations {
     manageJobs: string;
     viewApplications: string;
 
+    // Job Management
+    newJob: string;
+    editJob: string;
+    deleteJob: string;
+    jobTitleFr: string;
+    jobTitleAr: string;
+    jobDomain: string;
+    jobContractType: string;
+    jobScope: string;
+    jobLocation: string;
+    jobDescriptionFr: string;
+    jobDescriptionAr: string;
+    jobRequirementsFr: string;
+    jobRequirementsAr: string;
+    jobStatus: string;
+    contractInterim: string;
+    contractCDD: string;
+    contractCDI: string;
+    scopeNational: string;
+    scopeInternational: string;
+    jobActive: string;
+    jobInactive: string;
+
+    // Candidate Management
+    candidatesTitle: string;
+    candidatesDesc: string;
+    candidateName: string;
+    candidateEmail: string;
+    candidatePhone: string;
+    candidateDomain: string;
+    candidateExperience: string;
+    candidateCity: string;
+    candidateCertifications: string;
+    candidateLanguages: string;
+    candidateAvailability: string;
+    candidateLinkedIn: string;
+    candidateNotes: string;
+    viewCV: string;
+    downloadCV: string;
+    noCVUploaded: string;
+    candidateProfile: string;
+    candidateDetails: string;
+    matchingJobs: string;
+    searchCandidates: string;
+    filterByDomain: string;
+    filterByExperience: string;
+    allDomains: string;
+    allExperience: string;
+    noCandidates: string;
+    candidateSubmittedAt: string;
+
     // Product management
     productsTitle: string;
     productsDesc: string;
@@ -435,6 +486,52 @@ export interface Translations {
     productSaved: string;
     productDeleted: string;
     productSaveError: string;
+
+    // Settings
+    settingsPageTitle: string;
+    settingsPageDesc: string;
+    settingsSiteName: string;
+    settingsContactEmail: string;
+    settingsContactPhone: string;
+    settingsWhatsappNumber: string;
+    settingsAddress: string;
+    settingsInstagramUrl: string;
+    settingsLinkedinUrl: string;
+    settingsSaveSuccess: string;
+    settingsSaveError: string;
+    settingsGeneralSection: string;
+    settingsContactSection: string;
+    settingsSocialSection: string;
+    lastUpdated: string;
+
+    // Quiz Management
+    quizManagement: string;
+    quizTitle: string;
+    quizDescription: string;
+    quizPassingScore: string;
+    quizTimeLimit: string;
+    quizTimeLimitMinutes: string;
+    quizNoTimeLimit: string;
+    quizQuestions: string;
+    quizAddQuestion: string;
+    quizQuestionText: string;
+    quizQuestionOrder: string;
+    quizOptions: string;
+    quizOption: string;
+    quizCorrectAnswer: string;
+    quizMarkCorrect: string;
+    quizRemoveQuestion: string;
+    quizRemoveOption: string;
+    quizAddOption: string;
+    quizSaveQuiz: string;
+    quizNoQuizYet: string;
+    quizCreateFirst: string;
+    quizEditQuiz: string;
+    quizDeleteQuiz: string;
+    quizMinPassingScore: string;
+    quizQuestionsRequired: string;
+    quizOptionsRequired: string;
+    quizCorrectAnswerRequired: string;
   };
   catalog: {
     title: string;
@@ -447,5 +544,44 @@ export interface Translations {
     viewCourse: string;
     noDescription: string;
     allLevelsOption: string;
+  };
+  quiz: {
+    title: string;
+    startQuiz: string;
+    submitQuiz: string;
+    submitting: string;
+    question: string;
+    of: string;
+    timeRemaining: string;
+    minutes: string;
+    selectAnswer: string;
+    yourScore: string;
+    passed: string;
+    failed: string;
+    passingScore: string;
+    retakeQuiz: string;
+    backToCourse: string;
+    quizNotAvailable: string;
+    mustCompleteAllLessons: string;
+    alreadyPassed: string;
+    yourBestScore: string;
+    attemptsCount: string;
+    lastAttempt: string;
+    viewCertificate: string;
+  };
+  certificate: {
+    title: string;
+    certificateNumber: string;
+    issuedDate: string;
+    downloadPdf: string;
+    viewCertificate: string;
+    myCertificates: string;
+    noCertificates: string;
+    certificateFor: string;
+    issued: string;
+    download: string;
+    generatingCertificate: string;
+    certificateGenerated: string;
+    certificateError: string;
   };
 }

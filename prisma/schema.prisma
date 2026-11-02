@@ -206,6 +206,7 @@ model ProductCategory {
   descriptionFr         String?
   descriptionAr         String?
   icon                  String?
+  image                 String?
   order                 Int                    @default(0)
   isVisible             Boolean                @default(true)
   createdAt             DateTime               @default(now())
