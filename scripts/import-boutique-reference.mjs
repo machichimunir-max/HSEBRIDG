@@ -1,14 +1,10 @@
-import { mkdir, writeFile } from "node:fs/promises";
-import { join } from "node:path";
 import { load } from "cheerio";
 import { PrismaClient } from "@prisma/client";
 
 const BASE_URL = "https://3smorocco.com";
 const CATALOG_URL = `${BASE_URL}/category/btp-GFPPL/details`;
-const ASSET_DIR = join(process.cwd(), "public", "images", "boutique", "reference-catalog");
 const APPLY = process.argv.includes("--apply");
 const WAIT_MS = 350;
-const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
 
 const categories = [
   {
@@ -17,7 +13,7 @@ const categories = [
     titleAr: "حماية الرأس",
     descriptionFr: "Équipements de protection individuelle destinés à protéger la tête.",
     descriptionAr: "معدات حماية فردية مخصصة لحماية الرأس.",
-    image: "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&w=1200&q=78&fm=jpg",
+    image: "/images/boutique/categories/protection-tete.svg",
   },
   {
     slug: "protection-yeux",
@@ -25,7 +21,7 @@ const categories = [
     titleAr: "حماية العينين والوجه",
     descriptionFr: "Lunettes, écrans et visières de protection.",
     descriptionAr: "نظارات وشاشات وواقيات للوجه.",
-    image: "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1200&q=78&fm=jpg",
+    image: "/images/boutique/categories/protection-yeux.svg",
   },
   {
     slug: "protection-auditive",
@@ -33,7 +29,7 @@ const categories = [
     titleAr: "حماية السمع",
     descriptionFr: "Équipements de protection contre les expositions sonores.",
     descriptionAr: "معدات للحماية من التعرض للضوضاء.",
-    image: "https://images.unsplash.com/photo-1589903308904-1010c2294adc?auto=format&fit=crop&w=1200&q=78&fm=jpg",
+    image: "/images/boutique/categories/protection-auditive.svg",
   },
   {
     slug: "protection-mains",
@@ -41,7 +37,7 @@ const categories = [
     titleAr: "حماية اليدين",
     descriptionFr: "Gants et équipements de protection des mains.",
     descriptionAr: "قفازات ومعدات لحماية اليدين.",
-    image: "https://images.unsplash.com/photo-1623935920795-b9d11a3149e2?auto=format&fit=crop&w=1200&q=78&fm=jpg",
+    image: "/images/boutique/categories/protection-mains.svg",
   },
   {
     slug: "protection-pieds",
@@ -49,7 +45,7 @@ const categories = [
     titleAr: "حماية القدمين",
     descriptionFr: "Chaussures et équipements de protection des pieds.",
     descriptionAr: "أحذية ومعدات لحماية القدمين.",
-    image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=1200&q=78&fm=jpg",
+    image: "/images/boutique/categories/protection-pieds.svg",
   },
   {
     slug: "vetements-haute-visibilite",
@@ -57,7 +53,7 @@ const categories = [
     titleAr: "ملابس الحماية",
     descriptionFr: "Vêtements et accessoires de protection pour les activités professionnelles.",
     descriptionAr: "ملابس وإكسسوارات حماية للأنشطة المهنية.",
-    image: "https://images.unsplash.com/photo-1571687949921-1306bfb24b72?auto=format&fit=crop&w=1200&q=78&fm=jpg",
+    image: "/images/boutique/categories/vetements-haute-visibilite.svg",
   },
   {
     slug: "travail-hauteur",
@@ -65,7 +61,7 @@ const categories = [
     titleAr: "العمل على ارتفاع",
     descriptionFr: "Équipements pour les travaux en hauteur et la prévention des chutes.",
     descriptionAr: "معدات للعمل على ارتفاع والوقاية من السقوط.",
-    image: "https://images.unsplash.com/photo-1581094271901-8022df4466f9?auto=format&fit=crop&w=1200&q=78&fm=jpg",
+    image: "/images/boutique/categories/travail-hauteur.svg",
   },
   {
     slug: "protection-respiratoire",
@@ -73,7 +69,7 @@ const categories = [
     titleAr: "حماية الجهاز التنفسي",
     descriptionFr: "Masques et équipements de protection respiratoire.",
     descriptionAr: "أقنعة ومعدات لحماية الجهاز التنفسي.",
-    image: "https://images.unsplash.com/photo-1584483766114-2cea6facdf57?auto=format&fit=crop&w=1200&q=78&fm=jpg",
+    image: "/images/boutique/categories/protection-respiratoire.svg",
   },
   {
     slug: "lutte-incendie",
@@ -81,7 +77,7 @@ const categories = [
     titleAr: "مكافحة الحرائق",
     descriptionFr: "Équipements de première intervention et de lutte contre l’incendie.",
     descriptionAr: "معدات التدخل الأولي ومكافحة الحرائق.",
-    image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1200&q=78&fm=jpg",
+    image: "/images/boutique/categories/lutte-incendie.svg",
   },
   {
     slug: "epc-securisation",
@@ -89,7 +85,7 @@ const categories = [
     titleAr: "معدات الحماية الجماعية",
     descriptionFr: "Équipements de balisage, de signalisation et de sécurisation des zones.",
     descriptionAr: "معدات تحديد المناطق والإشارات وتأمينها.",
-    image: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=1200&q=78&fm=jpg",
+    image: "/images/boutique/categories/epc-securisation.svg",
   },
   {
     slug: "epi-divers",
@@ -97,7 +93,7 @@ const categories = [
     titleAr: "معدات سلامة متنوعة",
     descriptionFr: "Autres équipements de sécurité et de protection individuelle.",
     descriptionAr: "معدات أخرى للسلامة والحماية الفردية.",
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=78&fm=jpg",
+    image: "/images/boutique/categories/epi-divers.svg",
   },
 ];
 
@@ -244,35 +240,6 @@ async function scrapeProducts(urls) {
   return { products, failures };
 }
 
-async function downloadCategoryImages(usedCategories) {
-  await mkdir(ASSET_DIR, { recursive: true });
-  const imagePaths = new Map();
-
-  for (const category of usedCategories) {
-    const response = await fetch(category.image, {
-      headers: { "User-Agent": "HSEBridgeCatalogImporter/1.0" },
-      signal: AbortSignal.timeout(20000),
-    });
-    const contentType = response.headers.get("content-type") ?? "";
-    if (!response.ok || !contentType.startsWith("image/")) {
-      throw new Error(`Could not download licensed category image for ${category.slug}`);
-    }
-
-    const bytes = Buffer.from(await response.arrayBuffer());
-    const isJpeg = bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
-    if (!isJpeg || bytes.length > MAX_IMAGE_BYTES || bytes.length < 100) {
-      throw new Error(`Category image has an invalid size: ${category.slug}`);
-    }
-
-    const filename = `${category.slug}.jpg`;
-    await writeFile(join(ASSET_DIR, filename), bytes);
-    imagePaths.set(category.slug, `/images/boutique/reference-catalog/${filename}`);
-    await delay(WAIT_MS);
-  }
-
-  return imagePaths;
-}
-
 async function applyProducts(products, imagePaths) {
   const prisma = new PrismaClient();
 
@@ -284,7 +251,7 @@ async function applyProducts(products, imagePaths) {
       for (const category of new Set(products.map((product) => product.category))) {
         const saved = await transaction.productCategory.upsert({
           where: { slug: category.slug },
-          update: {},
+          update: { image: imagePaths.get(category.slug) },
           create: {
             slug: category.slug,
             titleFr: category.titleFr,
@@ -353,9 +320,9 @@ async function main() {
     return;
   }
 
-  const imagePaths = await downloadCategoryImages(usedCategories);
+  const imagePaths = new Map(usedCategories.map((category) => [category.slug, category.image]));
   await applyProducts(products, imagePaths);
-  console.log(`Imported ${products.length} products and ${imagePaths.size} illustrative category images.`);
+  console.log(`Imported ${products.length} products using ${imagePaths.size} local category covers.`);
 }
 
 main().catch((error) => {

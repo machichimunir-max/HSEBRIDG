@@ -7,16 +7,17 @@ async function updateCategoryImages() {
   const categories = await prisma.productCategory.findMany();
 
   const imagesMap = {
-    "protection-tete": "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=800&h=600&fit=crop",
-    "protection-yeux": "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=800&h=600&fit=crop",
-    "protection-auditive": "https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=800&h=600&fit=crop",
-    "protection-mains": "https://images.unsplash.com/photo-1623935920795-b9d11a3149e2?w=800&h=600&fit=crop",
-    "protection-pieds": "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=800&h=600&fit=crop",
-    "vetements-haute-visibilite": "https://images.unsplash.com/photo-1571687949921-1306bfb24b72?w=800&h=600&fit=crop",
-    "travail-hauteur": "https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=800&h=600&fit=crop",
-    "protection-respiratoire": "https://images.unsplash.com/photo-1584483766114-2cea6facdf57?w=800&h=600&fit=crop",
-    "lutte-incendie": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop",
-    "epc-securisation": "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=800&h=600&fit=crop"
+    "protection-tete": "/images/boutique/categories/protection-tete.svg",
+    "protection-yeux": "/images/boutique/categories/protection-yeux.svg",
+    "protection-auditive": "/images/boutique/categories/protection-auditive.svg",
+    "protection-mains": "/images/boutique/categories/protection-mains.svg",
+    "protection-pieds": "/images/boutique/categories/protection-pieds.svg",
+    "vetements-haute-visibilite": "/images/boutique/categories/vetements-haute-visibilite.svg",
+    "travail-hauteur": "/images/boutique/categories/travail-hauteur.svg",
+    "protection-respiratoire": "/images/boutique/categories/protection-respiratoire.svg",
+    "lutte-incendie": "/images/boutique/categories/lutte-incendie.svg",
+    "epc-securisation": "/images/boutique/categories/epc-securisation.svg",
+    "epi-divers": "/images/boutique/categories/epi-divers.svg",
   };
 
   for (const category of categories) {

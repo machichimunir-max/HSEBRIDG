@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" fill="none">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#b7dce4"/><stop offset="1" stop-color="#ebd5b4"/></linearGradient>
+    <linearGradient id="helmet" x2="1" y2="1"><stop stop-color="#f8d950"/><stop offset="1" stop-color="#d3921d"/></linearGradient>
+    <linearGradient id="vest" x2="1" y2="1"><stop stop-color="#f7c943"/><stop offset="1" stop-color="#df8c27"/></linearGradient>
+    <linearGradient id="scene" x2="0" y2="1"><stop stop-color="#87958b"/><stop offset="1" stop-color="#52615a"/></linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#sky)"/><circle cx="964" cy="119" r="61" fill="#fff0b8" opacity=".75"/>
+  <path d="M0 455 183 351l133 66 146-163 147 208 141-120 207 87 112-65 131 72v264H0z" fill="#99aba2" opacity=".5"/>
+  <path d="M0 490h1200v210H0z" fill="#b09a7a"/><path d="M653 211h384v280H653z" fill="url(#scene)"/><path d="M679 237h334v229H679z" fill="#c7c8b8"/>
+  <path d="M709 252v209m70-209v209m70-209v209m70-209v209m70-209v209M679 321h334m-334 70h334" stroke="#73837c" stroke-width="9"/>
+  <path d="M116 352V111h18v241M58 129h283v16H58zm23 16 85 85m153-85-85 85m-150 51 82 83m151-83-82 83" stroke="#3b554f" stroke-width="13"/><path d="M40 104h319v18H40zm259-40h18v137h-18zm-280 22h375v14H19z" fill="#3b554f"/>
+  <ellipse cx="817" cy="601" rx="249" ry="31" fill="#223833" opacity=".3"/>
+  <path d="M756 236c-34 0-60 28-60 62v67h120v-67c0-34-26-62-60-62z" fill="#b47b50" stroke="#744b32" stroke-width="9"/>
+  <path d="M673 255c6-88 65-147 146-147s140 59 146 147H673z" fill="url(#helmet)" stroke="#9c681c" stroke-width="11"/>
+  <path d="M659 246h322c33 0 52 13 52 35s-19 35-52 35H659c-33 0-52-13-52-35s19-35 52-35z" fill="#f2cc45" stroke="#9c681c" stroke-width="9"/>
+  <path d="M806 354c-37 0-64 27-64 62v158h300V416c0-35-27-62-64-62h-172z" fill="#344942" stroke="#192925" stroke-width="12"/>
+  <path d="m786 363 106 2 43 52-96 87-96-87 43-54z" fill="url(#vest)" stroke="#a66c1a" stroke-width="9"/>
+  <path d="M839 365v133m-73-75 73 61 73-61" stroke="#f5f2e7" stroke-width="13"/>
+  <path d="M777 527h204v44H777z" fill="#404d47"/><path d="M786 538h185m-164 0v22m55-22v22m55-22v22m55-22v22" stroke="#d4a842" stroke-width="6"/>
+  <path d="M686 429c-32 0-55 25-55 57v64h54v-72c0-16 11-27 27-27h13v-22h-39z" fill="#dcae35" stroke="#85591c" stroke-width="8"/>
+  <path d="M635 466c-7-25 10-46 34-46h17v68h-27c-12 0-21-8-24-22z" fill="#3e574f"/>
+</svg>

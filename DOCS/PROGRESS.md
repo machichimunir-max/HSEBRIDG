@@ -413,3 +413,18 @@ Previous session marked tasks as "done" when only models/placeholders existed. R
 - `npx tsx scripts/check-translation-keys.ts` (501 FR/AR keys, in sync)
 **Issues**: 41 source images had no unambiguous product match and were not copied; review aliases before future imports.
 **Run**: `npm run boutique:sync-images -- --delete-unmatched` to review; apply with `--apply --delete-unmatched --confirm-delete=N`.
+
+### Boutique category cover artwork
+**Status**: done
+**Completed**: 2026-11-17
+**Files changed**:
+- `public/images/boutique/categories/` (11 original construction-site safety illustrations)
+- `prisma/seed-boutique-images.ts` (local category cover paths)
+- `scripts/import-boutique-reference.mjs` (reuse local category art instead of remote downloads)
+**Database**: Updated 11 category cover paths to local public assets.
+**Tests**:
+- SVG XML parsing (11 files passed)
+- `node --check scripts/import-boutique-reference.mjs` and ESLint (passed)
+- `npm run build` (passed)
+- Production `/boutique` page responded 200; category grid visually checked.
+**Issues**: None.

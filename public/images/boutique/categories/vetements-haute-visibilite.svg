@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" fill="none">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#a9d3df"/><stop offset="1" stop-color="#edcf9f"/></linearGradient>
+    <linearGradient id="vest" x2="1" y2="1"><stop stop-color="#f8d64f"/><stop offset="1" stop-color="#e5961d"/></linearGradient>
+    <linearGradient id="shirt" x2="0" y2="1"><stop stop-color="#3d514c"/><stop offset="1" stop-color="#1b2b28"/></linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#sky)"/><circle cx="961" cy="122" r="64" fill="#fff0b7" opacity=".8"/>
+  <path d="M0 454 183 352l134 66 145-164 148 207 140-119 209 87 111-65 130 72v264H0z" fill="#94a69e" opacity=".58"/>
+  <path d="M0 488h1200v212H0z" fill="#ae9574"/><path d="M644 207h396v285H644z" fill="#7e8d87"/><path d="M670 234h344v233H670z" fill="#c6c6b5"/>
+  <path d="M703 250v211m71-211v211m71-211v211m71-211v211m71-211v211M670 320h344m-344 70h344" stroke="#71817b" stroke-width="9"/>
+  <path d="M117 351V110h18v241M59 128h283v16H59zm23 16 85 85m154-85-85 85m-151 51 84 83m151-83-84 83" stroke="#39534e" stroke-width="13"/><path d="M41 103h318v18H41zm258-40h18v137h-18zm-279 23h374v14H20z" fill="#39534e"/>
+  <ellipse cx="818" cy="611" rx="229" ry="32" fill="#243833" opacity=".3"/>
+  <path d="M784 240c-29 0-51 23-51 52v51c0 24 18 44 42 48l-8 177h237l-8-177c24-4 42-24 42-48v-51c0-29-22-52-51-52l-65-44h-73l-65 44z" fill="url(#shirt)" stroke="#182925" stroke-width="12"/>
+  <path d="m764 253 51 2 28 120-75 44-56-48 26-77c5-17 13-30 26-41zm215 0-51 2-28 120 75 44 56-48-26-77c-5-17-13-30-26-41z" fill="url(#vest)" stroke="#a96c19" stroke-width="11" stroke-linejoin="round"/>
+  <path d="M827 255h105l29 121H799l28-121z" fill="#f3c83d"/>
+  <path d="M843 258v118m75-118v118m-82 46-7 139m119-139 7 139" stroke="#f4f4e7" stroke-width="16"/>
+  <path d="M843 258v118m75-118v118m-82 46-7 139m119-139 7 139" stroke="#7d8780" stroke-width="5" stroke-dasharray="8 10"/>
+  <path d="M796 396h163m-156 36h148m-143 134h153" stroke="#a86e1c" stroke-width="7" opacity=".7"/>
+  <path d="M863 192c0-42 23-68 53-68s53 26 53 68" stroke="#304842" stroke-width="14"/><path d="M866 187h100v42H866z" fill="#f3c63c"/>
+</svg>
