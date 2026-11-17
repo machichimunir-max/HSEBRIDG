@@ -9,6 +9,7 @@
     "lint": "eslint",
     "db:generate": "prisma generate",
     "boutique:import-reference": "node scripts/import-boutique-reference.mjs",
+    "boutique:sync-images": "node scripts/sync-boutique-images.mjs",
     "db:seed": "node prisma/seed.mjs",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",

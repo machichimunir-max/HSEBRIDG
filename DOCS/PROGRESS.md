@@ -396,3 +396,20 @@ Previous session marked tasks as "done" when only models/placeholders existed. R
 - **CHUNK A COMPLETE** and committed (commit f2ce903)
 - Created CLAUDE.md comprehensive guide for future sessions
 - Next: Chunk B (Boutique products CRUD) - large scope, will need careful context management
+
+### Boutique local product-image sync
+**Status**: done
+**Completed**: 2026-11-17
+**Files changed**:
+- `scripts/sync-boutique-images.mjs` (dry-run-first matching, public image copy, database updates, guarded unmatched-product deletion)
+- `package.json` (added `boutique:sync-images`)
+- `public/images/boutique/products/` (11 matched custom product images)
+**Database**: Updated 11 products and deleted 77 unmatched products after explicit confirmation.
+**Tests**:
+- `node --check scripts/sync-boutique-images.mjs` (passed)
+- `npx eslint scripts/sync-boutique-images.mjs` (passed)
+- `npm run boutique:sync-images -- --delete-unmatched` (dry run: 11 matched, 77 unmatched)
+- `npm run build` (passed)
+- `npx tsx scripts/check-translation-keys.ts` (501 FR/AR keys, in sync)
+**Issues**: 41 source images had no unambiguous product match and were not copied; review aliases before future imports.
+**Run**: `npm run boutique:sync-images -- --delete-unmatched` to review; apply with `--apply --delete-unmatched --confirm-delete=N`.
